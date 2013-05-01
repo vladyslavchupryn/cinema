@@ -6,11 +6,11 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class TimeStep {
-	@Column(name = "`time_step_in_milli`")
+	@Column(name = "\"time_step_in_milli\"")
 	@Basic
 	private Long inMilli;
 
-	@Column(name = "`time_step_type`")
+	@Column(name = "\"time_step_type\"")
 	@Basic
 	private Short type;
 

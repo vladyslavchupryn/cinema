@@ -15,7 +15,7 @@ import org.hibernate.annotations.Parameter;
 import ua.pp.chuprin.web100.cinema.domain.dataset.client.ClientDataset;
 
 @Entity
-@Table(name = "`WorkerDatasets`")
+@Table(name = "\"WorkerDatasets\"")
 public class WorkerDataset {
 
 	@OneToOne(mappedBy = "workerDataset")
@@ -23,15 +23,15 @@ public class WorkerDataset {
 
 	@Id
 	@GenericGenerator(
-		name = "`generator`",
+		name = "\"generator\"",
 		strategy = "foreign",
-		parameters = @Parameter(name = "`property`", value = "clientDataset")
+		parameters = @Parameter(name = "\"property\"", value = "clientDataset")
 	)
 	@GeneratedValue(generator = "generator")
-	@Column(name = "`id`")
+	@Column(name = "\"id\"")
 	private Integer id;
 
-	@Column(name = "`path`")
+	@Column(name = "\"path\"")
 	private String path;
 
 	@Embedded
@@ -48,36 +48,36 @@ public class WorkerDataset {
 	@Embedded
 	@AttributeOverrides({
 		@AttributeOverride(
-			name = "`addOffsetKey`",
+			name = "\"addOffsetKey\"",
 			column = @Column(name = "metadata_add_offset_key")),
 		@AttributeOverride(
-			name = "`scaleFactorKey`",
+			name = "\"scaleFactorKey\"",
 			column = @Column(name = "metadata_scale_factor_key")),
 		@AttributeOverride(
-			name = "`missingValueKey`",
+			name = "\"missingValueKey\"",
 			column = @Column(name = "metadata_missing_value_key")),
 		@AttributeOverride(
-			name = "`fillValueKey`",
+			name = "\"fillValueKey\"",
 			column = @Column(name = "metadata_fill_value_key")),
 		@AttributeOverride(
-			name = "`addOffset`",
+			name = "\"addOffset\"",
 			column = @Column(name = "metadata_add_offset")),
 		@AttributeOverride(
-			name = "`scaleFactor`",
+			name = "\"scaleFactor\"",
 			column = @Column(name = "metadata_scale_factor")),
 		@AttributeOverride(
-			name = "`missingValue`",
+			name = "\"missingValue\"",
 			column = @Column(name = "metadata_missing_value")),
 		@AttributeOverride(
-			name = "`fillValue`",
+			name = "\"fillValue\"",
 			column = @Column(name = "metadata_fill_value"))
 	})
 	private WorkerMetadata metadata;
 
-	@Column(name = "`scan`")
+	@Column(name = "\"scan\"")
 	private String scan;
 
-	@Column(name = "`Name`")
+	@Column(name = "\"Name\"")
 	private String name;
 
 	public GridStep getGridStep() {

@@ -12,10 +12,10 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "`PlaceTypes`")
+@Table(name = "PlaceTypes")
 public class PlaceType {
 
-	@Column(name = "`id`", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id
 	@GeneratedValue(
 		generator = "placeType_sequence_generator",
@@ -23,12 +23,12 @@ public class PlaceType {
 	)
 	@SequenceGenerator(
 		name = "placeType_sequence_generator",
-		sequenceName = "`PlaceTypes_id_seq`",
+		sequenceName = "\"PlaceTypes_id_seq\"",
 		allocationSize = 1
 	)
 	private Integer id;
 
-	@Column(name = "`name`", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "name", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String name;
 

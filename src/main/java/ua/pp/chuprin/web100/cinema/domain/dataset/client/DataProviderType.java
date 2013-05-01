@@ -12,10 +12,10 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(
-	name = "`DataProviderType`",
+	name = "\"DataProviderType\"",
 	uniqueConstraints = {
-		@UniqueConstraint(columnNames = "`name`"),
-		@UniqueConstraint(columnNames = "`value`")
+		@UniqueConstraint(columnNames = "\"name\""),
+		@UniqueConstraint(columnNames = "\"value\"")
 	}
 )
 
@@ -37,11 +37,11 @@ public class DataProviderType {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "data_provider_type_generator")
 	private Short id;
 
-	@Column(name = "`name`")
+	@Column(name = "\"name\"")
 	@Basic
 	private String name;
 
-	@Column(name = "`value`")
+	@Column(name = "\"value\"")
 	@Basic
 	private String value;
 

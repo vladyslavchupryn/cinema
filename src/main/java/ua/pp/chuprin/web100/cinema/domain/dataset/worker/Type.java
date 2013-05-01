@@ -19,7 +19,7 @@ import org.hibernate.annotations.Entity;
 public class Type {
 
 	@Id
-	@Column(name = "`id`")
+	@Column(name = "\"id\"")
 	@GeneratedValue(
 		strategy = GenerationType.SEQUENCE,
 		generator = "type_id_generator"
@@ -30,17 +30,17 @@ public class Type {
 	 */
 	@SequenceGenerator(
 		name = "type_id_generator",
-		sequenceName = "`Type_id_seq`"
+		sequenceName = "\"Type_id_seq\""
 	)
 	@Basic
 	private Short id;
 
 	@Basic
-	@Column(name = "`name`")
+	@Column(name = "\"name\"")
 	private String name;
 
 	@Basic
-	@Column(name = "`value`")
+	@Column(name = "\"value\"")
 	private String value;
 
 	public Short getId() {

@@ -2,13 +2,13 @@
  *
  * ## Usage
  *
- * ```css
+ * \"\"\"css
  *  -webkit-animation: notification .75s linear;
  *  -moz-animation: notification .75s linear;
  *  -ms-animation: notification .75s linear;
  *  -o-animation: notification .75s linear;
  *  animation: notification .75s linear;
- * ```
+ * \"\"\"
  */
 
 @-webkit-keyframes notification {

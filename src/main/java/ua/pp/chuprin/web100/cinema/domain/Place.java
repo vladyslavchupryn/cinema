@@ -14,9 +14,9 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "`Places`")
+@Table(name = "Places")
 public class Place {
-	@Column(name = "`id`", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id
 	@GeneratedValue(
 		generator = "place_sequence_generator",
@@ -24,16 +24,16 @@ public class Place {
 	)
 	@SequenceGenerator(
 		name = "place_sequence_generator",
-		sequenceName = "`Places_id_seq`",
+		sequenceName = "\"Places_id_seq\"",
 		allocationSize = 1
 	)
 	private Integer id;
 
-	@Column(name = "`categoryID`", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "categoryID", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Basic
 	private Integer categoryId;
 
-	@Column(name = "`number`", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+	@Column(name = "number", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
 	@Basic
 	private Short number;
 
@@ -41,15 +41,15 @@ public class Place {
 	private Collection<Order> ordersesById;
 
 	@ManyToOne
-	@JoinColumn(name = "`categoryID`", referencedColumnName = "id", nullable = false)
-	private Category categoriesByCategoryId;
+	@JoinColumn(name = "categoryID", referencedColumnName = "id", nullable = false)
+	private Category categoryByCategoryId;
 
-	public Category getCategoriesByCategoryId() {
-		return categoriesByCategoryId;
+	public Category getCategoryByCategoryId() {
+		return categoryByCategoryId;
 	}
 
-	public void setCategoriesByCategoryId(Category categoriesByCategoryId) {
-		this.categoriesByCategoryId = categoriesByCategoryId;
+	public void setCategoryByCategoryId(Category categoriesByCategoryId) {
+		this.categoryByCategoryId = categoriesByCategoryId;
 	}
 
 	public Integer getCategoryId() {

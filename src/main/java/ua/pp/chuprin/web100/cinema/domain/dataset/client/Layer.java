@@ -6,11 +6,11 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class Layer {
-	@Column(name = "`layer_type`")
+	@Column(name = "\"layer_type\"")
 	@Basic
 	private Short type;
 
-	@Column(name = "`layer_isolines`")
+	@Column(name = "\"layer_isolines\"")
 	@Basic
 	private Boolean isolines;
 

@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -14,10 +16,10 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "`Orders`")
+@Table(name = "Orders")
 public class Order {
 
-	@Column(name = "`id`", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id
 	@GeneratedValue(
 		generator = "order_sequence_generator",
@@ -25,33 +27,38 @@ public class Order {
 	)
 	@SequenceGenerator(
 		name = "order_sequence_generator",
-		sequenceName = "`Orders_id_seq`",
+		sequenceName = "\"Orders_id_seq\"",
 		allocationSize = 1
 	)
 	private Integer id;
 
-	@Column(name = "`customerName`", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "customerName", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String customerName;
 
-	@Column(name = "`price`", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "price", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private Double price;
 
-	@Column(name = "`comment`", nullable = true, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "comment", nullable = true, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String comment;
 
 	@ManyToOne
-	@JoinColumn(name = "`placeID`", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "placeID", referencedColumnName = "id", nullable = false)
 	private Place placeByPlaceId;
 
 	@ManyToOne
-	@JoinColumn(name = "`seasonID`", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "seasonID", referencedColumnName = "id", nullable = false)
 	private Session sessionBySeasonId;
 
-	@OneToMany(mappedBy = "orderByOrderId")
-	private Collection<OrderCorrelation> ordersCorrelationsesById;
+	@ManyToMany
+	@JoinTable(
+		name = "OrdersCorrelations",
+		joinColumns =  {@JoinColumn(name = "orderID")},
+		inverseJoinColumns = {@JoinColumn(name = "correlationID")}
+	)
+	private Collection<Correlation> ordersCorrelationsesById;
 
 	public String getComment() {
 		return comment;
@@ -77,11 +84,11 @@ public class Order {
 		this.id = id;
 	}
 
-	public Collection<OrderCorrelation> getOrdersCorrelationsesById() {
+	public Collection<Correlation> getOrdersCorrelationsesById() {
 		return ordersCorrelationsesById;
 	}
 
-	public void setOrdersCorrelationsesById(Collection<OrderCorrelation> ordersCorrelationsesById) {
+	public void setOrdersCorrelationsesById(Collection<Correlation> ordersCorrelationsesById) {
 		this.ordersCorrelationsesById = ordersCorrelationsesById;
 	}
 

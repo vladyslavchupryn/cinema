@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import ua.pp.chuprin.web100.cinema.domain.dataset.worker.WorkerDataset;
 
 @Entity
-@Table(name = "`ClientDatasets`")
+@Table(name = "\"ClientDatasets\"")
 public class ClientDataset {
 
 	@OneToOne(cascade = CascadeType.ALL)
@@ -24,21 +24,21 @@ public class ClientDataset {
 	private WorkerDataset workerDataset;
 
 	@Id
-	@Column(name = "`id`")
+	@Column(name = "\"id\"")
 	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "ClientDatasets_id_seq")
 	@SequenceGenerator(name = "ClientDatasets_id_seq", sequenceName = "\"ClientDatasets_id_seq\"", allocationSize = 1)
 	private Integer id;
 
 	// TODO замапить + lazy load
-	@Column(name = "`Parent`")
+	@Column(name = "\"Parent\"")
 	@Basic
 	private Integer parent;
 
-	@Column(name = "`Name`")
+	@Column(name = "\"Name\"")
 	@Basic
 	private String name;
 
-	@Column(name = "`description`")
+	@Column(name = "\"description\"")
 	@Basic
 	private String description;
 

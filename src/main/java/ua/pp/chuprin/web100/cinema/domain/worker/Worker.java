@@ -11,27 +11,27 @@ import javax.persistence.Table;
 import org.hibernate.annotations.Entity;
 
 @javax.persistence.Entity
-@Table(name = "`Workers`")
+@Table(name = "\"Workers\"")
 @Entity(
 	mutable = false // в мониторинге нет возможности редактировать
 )
 public class Worker {
 
 	@Id
-	@Column(name = "`id`")
+	@Column(name = "\"id\"")
 	@GeneratedValue(
 		generator = "worker_sequence_generator",
 		strategy = GenerationType.SEQUENCE
 	)
 	@SequenceGenerator(
 		name = "worker_sequence_generator",
-		sequenceName = "`Workers_id_seq`",
+		sequenceName = "\"Workers_id_seq\"",
 		allocationSize = 1
 	)
 	private Integer id;
 
 	@Basic
-	@Column(name = "`IP`")
+	@Column(name = "\"IP\"")
 	private String ip;
 
 	public Integer getId() {

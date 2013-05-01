@@ -12,7 +12,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(
-	name = "`TimeStepType`",
+	name = "\"TimeStepType\"",
 	uniqueConstraints = {
 		@UniqueConstraint(columnNames = "name"),
 		@UniqueConstraint(columnNames = "value")
@@ -27,17 +27,17 @@ public class TimeStepType {
 		generator = "time_step_type_id_generator")
 	@SequenceGenerator(
 		name = "time_step_type_id_generator",
-		sequenceName = "`Type_id_seq`"
+		sequenceName = "\"Type_id_seq\""
 	)
-	@Column(name = "`id`")
+	@Column(name = "\"id\"")
 	@Basic
 	private Short id;
 
-	@Column(name = "`name`")
+	@Column(name = "\"name\"")
 	@Basic
 	private String name;
 
-	@Column(name = "`value`")
+	@Column(name = "\"value\"")
 	@Basic
 	private String value;
 

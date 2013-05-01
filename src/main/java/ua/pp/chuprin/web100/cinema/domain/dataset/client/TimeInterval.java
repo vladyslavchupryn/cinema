@@ -6,11 +6,11 @@ import javax.persistence.Embeddable;
 
 @Embeddable
 public class TimeInterval {
-	@Column(name = "`time_interval_start`")
+	@Column(name = "\"time_interval_start\"")
 	@Basic
 	private Long start;
 
-	@Column(name = "`time_interval_end`")
+	@Column(name = "\"time_interval_end\"")
 	@Basic
 	private Long end;
 

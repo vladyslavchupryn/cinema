@@ -15,9 +15,9 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
-@Table(name = "`Sessions`")
+@Table(name = "Sessions")
 public class Session {
-	@Column(name = "`id`", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id
 	@GeneratedValue(
 		generator = "session_sequence_generator",
@@ -25,32 +25,32 @@ public class Session {
 	)
 	@SequenceGenerator(
 		name = "session_sequence_generator",
-		sequenceName = "`Sessions_id_seq`",
+		sequenceName = "\"Sessions_id_seq\"",
 		allocationSize = 1
 	)
 	private Integer id;
 
-	@Column(name = "`filmID`", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "filmID", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Basic
 	private Integer filmId;
 
-	@Column(name = "`hallID`", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "hallID", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Basic
 	private Integer hallId;
 
-	@Column(name = "`start`", nullable = false, insertable = true, updatable = true, length = 29, precision = 6)
+	@Column(name = "start", nullable = false, insertable = true, updatable = true, length = 29, precision = 6)
 	@Basic
 	private Timestamp start;
 
-	@OneToMany(mappedBy = "sessionsBySeasonId")
+	@OneToMany(mappedBy = "sessionBySeasonId")
 	private Collection<Order> ordersesById;
 
 	@ManyToOne
-	@JoinColumn(name = "`filmID`", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "filmID", referencedColumnName = "id", nullable = false)
 	private Film filmByFilmId;
 
 	@ManyToOne
-	@JoinColumn(name = "`hallID`", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "hallID", referencedColumnName = "id", nullable = false)
 	private Hall hallByHallId;
 
 	public Film getFilmByFilmId() {

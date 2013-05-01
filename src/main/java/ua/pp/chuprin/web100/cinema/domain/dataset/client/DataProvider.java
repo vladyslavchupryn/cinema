@@ -9,11 +9,11 @@ import javax.persistence.ManyToOne;
 
 @Embeddable
 public class DataProvider {
-	@Column(name = "`dataProvider_dataset_id`")
+	@Column(name = "\"dataProvider_dataset_id\"")
 	@Basic
 	private String datasetId;
 
-	@Column(name = "`dataProvider_type`")
+	@Column(name = "\"dataProvider_type\"")
 	@Basic
 	private Short type;
 
@@ -22,7 +22,7 @@ public class DataProvider {
 	 */
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(
-		name = "`dataProvider_type`",
+		name = "\"dataProvider_type\"",
 		insertable = false,
 		updatable = false
 	)

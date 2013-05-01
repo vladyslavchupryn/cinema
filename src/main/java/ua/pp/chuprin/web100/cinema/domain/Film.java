@@ -13,9 +13,9 @@ import java.io.Serializable;
 import java.util.Collection;
 
 @Entity
-@Table(name = "`Films`")
+@Table(name = "Films")
 public class Film {
-	@Column(name = "`id`", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id
 	@GeneratedValue(
 		generator = "film_sequence_generator",
@@ -23,36 +23,36 @@ public class Film {
 	)
 	@SequenceGenerator(
 		name = "film_sequence_generator",
-		sequenceName = "`Films_id_seq`",
+		sequenceName = "\"Films_id_seq\"",
 		allocationSize = 1
 	)
 	private Integer id;
 
-	@Column(name = "`name`", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "name", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String name;
 
-	@Column(name = "`author`", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "author", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String author;
 
-	@Column(name = "`genre`", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "genre", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String genre;
 
-	@Column(name = "`country`", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "country", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String country;
 
-	@Column(name = "`year`", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "year", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Basic
 	private Integer year;
 
-	@Column(name = "`duration`", nullable = false, insertable = true, updatable = true, length = 49, precision = 6)
+	@Column(name = "duration", nullable = false, insertable = true, updatable = true, length = 49, precision = 6)
 	@Basic
 	private Serializable duration;
 
-	@OneToMany(mappedBy = "filmsByFilmId")
+	@OneToMany(mappedBy = "filmByFilmId")
 	private Collection<Session> sessionsesById;
 
 	public String getAuthor() {

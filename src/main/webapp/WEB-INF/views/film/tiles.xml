@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+		"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+		"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+
+	<!--
+		Пример сипользования катомного tiles для отдельного модуля
+	-->
+
+	<definition name="film/edit" extends="base">
+		<put-attribute name="title" value="Films" />
+		<put-attribute name="content" value="film.edit" />
+	</definition>
+
+	<definition name="film.edit" template="/WEB-INF/views/film/edit.jsp">
+		<put-attribute name="editBody" value="/WEB-INF/views/film/editBody.jsp" />
+	</definition>
+
+</tiles-definitions>

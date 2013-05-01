@@ -14,11 +14,11 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "`Categories`")
+@Table(name = "Categories")
 public class Category {
 
 	@Column(
-		name = "`id`",
+		name = "id",
 		nullable = false,
 		insertable = true,
 		updatable = true,
@@ -32,13 +32,13 @@ public class Category {
 	)
 	@SequenceGenerator(
 		name = "category_sequence_generator",
-		sequenceName = "`Categories_id_seq`",
+		sequenceName = "\"Categories_id_seq\"",
 		allocationSize = 1
 	)
 	private Integer id;
 
 	@Column(
-		name = "`price`",
+		name = "price",
 		nullable = false,
 		insertable = true,
 		updatable = true,
@@ -50,21 +50,21 @@ public class Category {
 
 	@ManyToOne
 	@JoinColumn(
-		name = "`hallID`",
-		referencedColumnName = "`id`",
+		name = "hallID",
+		referencedColumnName = "id",
 		nullable = false
 	)
 	private Hall hallByHallId;
 
 	@ManyToOne
 	@JoinColumn(
-		name = "`typeID`",
-		referencedColumnName = "`id`",
+		name = "typeID",
+		referencedColumnName = "id",
 		nullable = false
 	)
 	private PlaceType placeTypeByTypeId;
 
-	@OneToMany(mappedBy = "categoriesByCategoryId")
+	@OneToMany(mappedBy = "categoryByCategoryId")
 	private Collection<Place> placesesById;
 
 	public Hall getHallByHallId() {

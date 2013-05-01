@@ -6,6 +6,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
@@ -13,11 +16,11 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
-@Table(name = "`Correlations`")
+@Table(name = "Correlations")
 public class Correlation {
 
 	@Column(
-		name = "`id`",
+		name = "id",
 		nullable = false,
 		insertable = true,
 		updatable = true,
@@ -31,13 +34,13 @@ public class Correlation {
 	)
 	@SequenceGenerator(
 		name = "correlation_sequence_generator",
-		sequenceName = "`Correlations_id_seq`",
+		sequenceName = "\"Correlations_id_seq\"",
 		allocationSize = 1
 	)
 	private Integer id;
 
 	@Column(
-		name = "`name`",
+		name = "name",
 		nullable = false,
 		insertable = true,
 		updatable = true,
@@ -48,7 +51,7 @@ public class Correlation {
 	private String name;
 
 	@Column(
-		name = "`percent`",
+		name = "percent",
 		nullable = false,
 		insertable = true,
 		updatable = true,
@@ -59,7 +62,7 @@ public class Correlation {
 	private Float percent;
 
 	@Column(
-		name = "`expiration`",
+		name = "expiration",
 		nullable = false,
 		insertable = true,
 		updatable = true,
@@ -69,8 +72,8 @@ public class Correlation {
 	@Basic
 	private Timestamp expiration;
 
-	@OneToMany(mappedBy = "`correlationsByCorrelationId`")
-	private Collection<OrderCorrelation> ordersCorrelationsesById;
+	@ManyToMany(mappedBy="ordersCorrelationsesById")
+	private Collection<Order> ordersCorrelationsesById;
 
 	public Timestamp getExpiration() {
 		return expiration;
@@ -96,11 +99,11 @@ public class Correlation {
 		this.name = name;
 	}
 
-	public Collection<OrderCorrelation> getOrdersCorrelationsesById() {
+	public Collection<Order> getOrdersCorrelationsesById() {
 		return ordersCorrelationsesById;
 	}
 
-	public void setOrdersCorrelationsesById(Collection<OrderCorrelation> ordersCorrelationsesById) {
+	public void setOrdersCorrelationsesById(Collection<Order> ordersCorrelationsesById) {
 		this.ordersCorrelationsesById = ordersCorrelationsesById;
 	}
 

@@ -12,9 +12,9 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "`Halls`")
+@Table(name = "Halls")
 public class Hall {
-	@Column(name = "`id`", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id
 	@GeneratedValue(
 		generator = "hall_sequence_generator",
@@ -22,12 +22,12 @@ public class Hall {
 	)
 	@SequenceGenerator(
 		name = "hall_sequence_generator",
-		sequenceName = "`Halls_id_seq`",
+		sequenceName = "\"Halls_id_seq\"",
 		allocationSize = 1
 	)
 	private Integer id;
 
-	@Column(name = "`name`", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "name", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String name;
 

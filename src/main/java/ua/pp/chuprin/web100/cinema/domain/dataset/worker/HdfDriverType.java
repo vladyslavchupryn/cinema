@@ -6,7 +6,7 @@ import javax.persistence.UniqueConstraint;
 
 @Entity
 @Table(
-	name = "`HDFDriverType`",
+	name = "\"HDFDriverType\"",
 	uniqueConstraints = {
 		@UniqueConstraint(columnNames = "name"),
 		@UniqueConstraint(columnNames = "value")

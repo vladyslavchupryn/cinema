@@ -12,12 +12,12 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
 @Entity
-@Table(name = "`LayerType`")
+@Table(name = "\"LayerType\"")
 @GenericGenerator(
 	name = "my_sequence_generator",
 	strategy = "sequence",
 	parameters = {
-		@Parameter(name = "`sequence`", value = "\"Type_id_seq\"")
+		@Parameter(name = "\"sequence\"", value = "\"Type_id_seq\"")
 	}
 )
 @org.hibernate.annotations.Entity(
@@ -30,7 +30,7 @@ import org.hibernate.annotations.Parameter;
 public class LayerType {
 
 	@Id
-	@Column(name = "`id`")
+	@Column(name = "\"id\"")
 	@GeneratedValue(
 		strategy = GenerationType.SEQUENCE,
 		generator = "my_sequence_generator"
@@ -39,7 +39,7 @@ public class LayerType {
 	private Short id;
 
 	@Column(
-		name = "`name`",
+		name = "\"name\"",
 		/**
 		 пример описания unique черз свойство аннотации. возможен вариант
 		 при помощи анотации к классу {@link DataProviderType}
@@ -55,10 +55,10 @@ public class LayerType {
 //		targetElement = String.class
 //	)
 //	@JoinTable(
-//		name = "`ClientDatasets`",
+//		name = "\"ClientDatasets\"",
 //		joinColumns = {
 //			@JoinColumn(
-//				name = "`layer_type`",
+//				name = "\"layer_type\"",
 //				// в данном случае может быть опущенно так как это поле
 //				// можно определить по @Id (если бы был первичный ключ из
 //				// нескольких полей то нельзя было бы)
@@ -66,11 +66,11 @@ public class LayerType {
 //			)
 //		}
 //	)
-//	@Column(name = "`Name`")
+//	@Column(name = "\"Name\"")
 //	private Set<String> datasetNames = new HashSet<String>();
 
 	@Column(
-		name = "`value`",
+		name = "\"value\"",
 		unique = true,
 		nullable = false
 	)
