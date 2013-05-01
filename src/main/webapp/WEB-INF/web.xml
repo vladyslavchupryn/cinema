@@ -10,6 +10,14 @@
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
 	</context-param>
 
+	<!--<listener>-->
+		<!--<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>-->
+	<!--</listener>-->
+	<!--<context-param>-->
+		<!--<param-name>log4jConfigLocation</param-name>-->
+		<!--<param-value>/WEB-INF/log4j.xml</param-value>-->
+	<!--</context-param>-->
+
 	<!-- Создаёт контейнер Spring, разделяемый всеми сервлетами и фильтрами
 		Загружает ApplicationContext Spring для поддержки DI
 	-->

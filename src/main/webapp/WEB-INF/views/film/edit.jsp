@@ -5,8 +5,9 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<div>Edit film</div>
+<h2 class="text-center">Edit film</h2>
+<br/>
 
-<c:if test="${!empty currentDataset}">
+<div class="span6 well well-large" >
 	<tiles:insertAttribute name="editBody"/>
-</c:if>
+</div>

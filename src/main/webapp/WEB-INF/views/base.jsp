@@ -32,7 +32,6 @@
 	<link rel="stylesheet"
 	      href="<spring:url value="/js/jquery/chosen/chosen.css" />"/>
 
-
 	<!-- Twitter Bootstrap ---------------------------------------------------->
 	<link rel="stylesheet"
 	      href="<spring:url value="/css/bootstrap/css/bootstrap.min.css" />"/>
@@ -51,6 +50,9 @@
 	<script type="text/javascript"
 	        src="<spring:url value="/js/bootstrap/notify/js/bootstrap-notify.js" />"></script>
 
+	<link rel="stylesheet"
+	      href="<spring:url value="/css/awesome/css/font-awesome.min.css" />"/>
+
 	<!-- Custom ---------------------------------------------------->
 	<script type="text/javascript"
 	        src="<spring:url value="/js/core/ui.js" />"></script>
@@ -66,9 +68,23 @@
 
 		var BASE_URL = "<spring:url value="/" />";
 	</script>
+	<link rel="stylesheet"
+	      href="<spring:url value="/css/bootstrap-fixes.css" />"/>
 	<style type="text/css">
 		#ui-datepicker-div {
 			font-size: 11px;
+		}
+
+		body {
+			padding-top: 60px;
+		}
+
+		.list-icon-cell {
+			width:70px;
+		}
+
+		.list-icon {
+			font-size: 1.5em;
 		}
 	</style>
 </head>
@@ -81,21 +97,21 @@
 <div class='notifications bottom-right'></div>
 <div class='notifications top-right'></div>
 
+<tiles:insertAttribute name="header"/>
 
-<!-- указываем компоненты которые должны загружаться из других файлов -->
-<div class="container">
-	<div id="page-header">
-		<tiles:insertAttribute name="header"/>
-	</div>
-	<div id="page-navigation">
-		<tiles:insertAttribute name="navigation"/>
-	</div>
-	<div id="page-content">
-		<tiles:insertAttribute name="content"/>
-	</div>
-	<div id="page-footer">
+<div class="container-fluid">
+	<div class="row-fluid">
+		<div class="span3">
+			<tiles:insertAttribute name="navigation"/>
+		</div><!--/span-->
+		<div class="span9">
+			<tiles:insertAttribute name="content"/>
+		</div><!--/span-->
+	</div><!--/row-->
+	<hr>
+	<footer>
 		<tiles:insertAttribute name="footer"/>
-	</div>
+	</footer>
 </div>
 
 </body>

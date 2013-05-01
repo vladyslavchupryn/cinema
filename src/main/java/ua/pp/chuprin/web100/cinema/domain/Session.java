@@ -46,19 +46,15 @@ public class Session {
 	private Collection<Order> ordersesById;
 
 	@ManyToOne
-	@JoinColumn(name = "filmID", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "filmID", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
 	private Film filmByFilmId;
 
 	@ManyToOne
-	@JoinColumn(name = "hallID", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "hallID", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
 	private Hall hallByHallId;
 
 	public Film getFilmByFilmId() {
 		return filmByFilmId;
-	}
-
-	public void setFilmByFilmId(Film filmByFilmId) {
-		this.filmByFilmId = filmByFilmId;
 	}
 
 	public Integer getFilmId() {
@@ -71,10 +67,6 @@ public class Session {
 
 	public Hall getHallByHallId() {
 		return hallByHallId;
-	}
-
-	public void setHallByHallId(Hall hallByHallId) {
-		this.hallByHallId = hallByHallId;
 	}
 
 	public Integer getHallId() {

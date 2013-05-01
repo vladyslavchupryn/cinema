@@ -41,15 +41,14 @@ public class Place {
 	private Collection<Order> ordersesById;
 
 	@ManyToOne
-	@JoinColumn(name = "categoryID", referencedColumnName = "id", nullable = false)
+	@JoinColumn(name = "categoryID", referencedColumnName = "id", nullable = false,
+		insertable = false,
+		updatable = false
+	)
 	private Category categoryByCategoryId;
 
 	public Category getCategoryByCategoryId() {
 		return categoryByCategoryId;
-	}
-
-	public void setCategoryByCategoryId(Category categoriesByCategoryId) {
-		this.categoryByCategoryId = categoriesByCategoryId;
 	}
 
 	public Integer getCategoryId() {

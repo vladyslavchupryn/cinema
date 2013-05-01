@@ -12,8 +12,13 @@ import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Collection;
 
+import org.hibernate.annotations.Type;
+import org.hibernate.annotations.TypeDef;
+import ua.pp.chuprin.web100.cinema.tools.Interval;
+
 @Entity
-@Table(name = "Films")
+@Table(name = "`Films`")
+@TypeDef(name="interval", typeClass = Interval.class)
 public class Film {
 	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id
@@ -49,8 +54,8 @@ public class Film {
 	private Integer year;
 
 	@Column(name = "duration", nullable = false, insertable = true, updatable = true, length = 49, precision = 6)
-	@Basic
-	private Serializable duration;
+	@Type(type = "interval")
+	private Integer duration;
 
 	@OneToMany(mappedBy = "filmByFilmId")
 	private Collection<Session> sessionsesById;
@@ -71,11 +76,11 @@ public class Film {
 		this.country = country;
 	}
 
-	public Serializable getDuration() {
+	public Integer getDuration() {
 		return duration;
 	}
 
-	public void setDuration(Serializable duration) {
+	public void setDuration(Integer duration) {
 		this.duration = duration;
 	}
 

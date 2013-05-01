@@ -5,7 +5,7 @@ CREATE TABLE "Films" (
     "author" varchar NOT NULL,
     "genre" varchar NOT NULL,
     "country" varchar NOT NULL,
-    "year" int NOT NULL,
+    "year" smallint NOT NULL,
     "duration" interval  NOT NULL
 );
 
