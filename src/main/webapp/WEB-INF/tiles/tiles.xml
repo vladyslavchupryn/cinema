@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC
+		"-//Apache Software Foundation//DTD Tiles Configuration 2.1//EN"
+		"http://tiles.apache.org/dtds/tiles-config_2_1.dtd">
+
+<tiles-definitions>
+	<definition name="base" template="/WEB-INF/views/base.jsp">
+		<put-attribute name="title" value="Default title" />
+		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
+		<put-attribute name="navigation" value="/WEB-INF/views/navigation.jsp" />
+		<put-attribute name="content" value="" />
+		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
+	</definition>
+
+	<!--
+		пример простого объявления нового шаблона для страницы
+	-->
+<!--
+	<definition name="clientDataset" extends="base" >
+		<put-attribute name="title" value="Default title" />
+		<put-attribute name="content" value="/WEB-INF/views/clientDataset/index.jsp" />
+	</definition>
+-->
+	<!--
+		объявлять шаблоны для каждой новой страницы затруднительно
+		воспользуемя широковещатеьным определением http://tiles.apache.org/2.2/framework/tutorial/advanced/wildcard.html
+
+		также возможны варианты
+		<definition name="WILDCARD:test.definition*.message*" template="/layout{1}.jsp">
+		<definition name="REGEXP:test\.definition(.*)\.message(.*)" template="/layout{1}.jsp">
+	-->
+	<definition name="*/*" extends="base">
+		<put-attribute name="title" value="View: {1}-{2}" />
+		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
+
+</tiles-definitions>

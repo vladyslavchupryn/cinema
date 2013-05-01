@@ -1,0 +1,4 @@
+.idea/
+target/
+cinema.iml
+src/main/webapp/WEB-INF/spring/environment.properties

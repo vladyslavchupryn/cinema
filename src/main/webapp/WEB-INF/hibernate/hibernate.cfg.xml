@@ -1,0 +1,37 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+		"-//Hibernate/Hibernate Configuration DTD//EN"
+		"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+	<session-factory>
+		<mapping
+				class="ua.pp.chuprin.web100.cinema.domain.dataset.client.ClientDataset"/>
+		<mapping
+				class="ua.pp.chuprin.web100.cinema.domain.dataset.client.DataProviderType"/>
+		<mapping
+				class="ua.pp.chuprin.web100.cinema.domain.dataset.client.TimeStepType"/>
+		<mapping
+				class="ua.pp.chuprin.web100.cinema.domain.dataset.client.LayerType"/>
+
+
+		<mapping
+				class="ua.pp.chuprin.web100.cinema.domain.dataset.worker.WorkerDataset"/>
+		<mapping
+				class="ua.pp.chuprin.web100.cinema.domain.dataset.worker.DriverType"/>
+		<mapping
+				class="ua.pp.chuprin.web100.cinema.domain.dataset.worker.HdfDriverType"/>
+
+		<mapping
+				class="ua.pp.chuprin.web100.cinema.domain.worker.Worker"/>
+
+		<mapping class="ua.pp.chuprin.web100.cinema.domain.Category"/>
+		<mapping class="ua.pp.chuprin.web100.cinema.domain.Correlation"/>
+		<mapping class="ua.pp.chuprin.web100.cinema.domain.Film"/>
+		<mapping class="ua.pp.chuprin.web100.cinema.domain.Hall"/>
+		<mapping class="ua.pp.chuprin.web100.cinema.domain.Order"/>
+		<mapping class="ua.pp.chuprin.web100.cinema.domain.OrderCorrelation"/>
+		<mapping class="ua.pp.chuprin.web100.cinema.domain.Place"/>
+		<mapping class="ua.pp.chuprin.web100.cinema.domain.PlaceType"/>
+		<mapping class="ua.pp.chuprin.web100.cinema.domain.Session"/>
+	</session-factory>
+</hibernate-configuration>
