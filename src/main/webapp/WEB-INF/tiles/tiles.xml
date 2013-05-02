@@ -12,6 +12,14 @@
 		<put-attribute name="footer" value="/WEB-INF/views/footer.jsp" />
 	</definition>
 
+	<definition name="*/list" extends="base">
+		<put-attribute name="title" value="View: {1}-list2123" />
+		<put-attribute name="content" value="crud-{1}-list" />
+	</definition>
+
+	<definition name="crud-*-*" template="/WEB-INF/views/{1}/crud.jsp">
+		<put-attribute name="crudContent" value="/WEB-INF/views/{1}/{2}.jsp" />
+	</definition>
 
 	<definition name="*/edit" extends="base">
 		<put-attribute name="title" value="View: {1}-{2}" />

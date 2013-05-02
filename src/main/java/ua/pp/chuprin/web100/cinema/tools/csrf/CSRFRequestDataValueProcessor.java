@@ -1,14 +1,12 @@
 package ua.pp.chuprin.web100.cinema.tools.csrf;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.web.servlet.support.RequestDataValueProcessor;
 
 public class CSRFRequestDataValueProcessor implements RequestDataValueProcessor {
-
 
 	@Override
 	public String processAction(HttpServletRequest request, String action) {

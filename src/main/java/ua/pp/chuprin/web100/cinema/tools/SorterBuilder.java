@@ -15,6 +15,7 @@ public class SorterBuilder {
 	public static class Sorter {
 
 		public final String column;
+
 		public final String oder;
 
 		public Sorter(String column, String oder) {
@@ -34,9 +35,9 @@ public class SorterBuilder {
 		String oder = DEFAULT_SORT;
 
 		String[] sortSettings = sort.split("-");
-		if(sortSettings.length == 2) {
-			for(String property : meta.getPropertyNames()) {
-				if(sortSettings[0].equals(property)) {
+		if (sortSettings.length == 2) {
+			for (String property : meta.getPropertyNames()) {
+				if (sortSettings[0].equals(property)) {
 					column = property;
 					break;
 				}

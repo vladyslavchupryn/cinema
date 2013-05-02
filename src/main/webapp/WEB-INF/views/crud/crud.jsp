@@ -3,18 +3,10 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<dl class="dl-horizontal">
-	<dt>Name:</dt>
-	<dd>${film.name}</dd>
-	<dt>Author:</dt>
-	<dd>${film.author}</dd>
-	<dt>Genre:</dt>
-	<dd>${film.genre}</dd>
-	<dt>Country:</dt>
-	<dd>${film.country}</dd>
-	<dt>Year:</dt>
-	<dd>${film.year}</dd>
-	<dt>Duration:</dt>
-	<dd>${film.duration}</dd>
-</dl>
+<spring:url var="base" value="/" />
+<c:set var="crud" scope="session" value="${base}${path}/"/>
+
+<tiles:insertAttribute name="crudContent"/>
+

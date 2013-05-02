@@ -5,12 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class CSRFHandlerInterceptor extends HandlerInterceptorAdapter{
+public class CSRFHandlerInterceptor extends HandlerInterceptorAdapter {
 
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
-		if (request.getMethod().equalsIgnoreCase("POST") ) {
+		if (request.getMethod().equalsIgnoreCase("POST")) {
 			String sessionToken = CSRFTokenManager.getTokenForSession(request.getSession());
 			String requestToken = CSRFTokenManager.getTokenFromRequest(request);
 			if (sessionToken.equals(requestToken)) {
@@ -23,6 +23,5 @@ public class CSRFHandlerInterceptor extends HandlerInterceptorAdapter{
 			return true;
 		}
 	}
-
 
 }

@@ -16,7 +16,7 @@
 	<context:annotation-config/>
 
 	<!-- Определяем папки, в которых будем автоматически искать бины-компоненты
-		(@Component, @Service) -->
+		(@Component, @CRUDService) -->
 	<context:component-scan
 			base-package="ua.pp.chuprin.web100.cinema.dao.impl"/>
 	<context:component-scan

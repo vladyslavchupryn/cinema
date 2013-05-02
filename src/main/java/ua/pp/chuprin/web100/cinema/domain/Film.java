@@ -9,7 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.util.Collection;
 
 import org.hibernate.annotations.Type;
@@ -18,7 +17,7 @@ import ua.pp.chuprin.web100.cinema.tools.Interval;
 
 @Entity
 @Table(name = "`Films`")
-@TypeDef(name="interval", typeClass = Interval.class)
+@TypeDef(name = "interval", typeClass = Interval.class)
 public class Film {
 	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id

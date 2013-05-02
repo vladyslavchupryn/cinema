@@ -6,10 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.sql.Timestamp;
@@ -72,7 +69,7 @@ public class Correlation {
 	@Basic
 	private Timestamp expiration;
 
-	@ManyToMany(mappedBy="ordersCorrelationsesById")
+	@ManyToMany(mappedBy = "ordersCorrelationsesById")
 	private Collection<Order> ordersCorrelationsesById;
 
 	public Timestamp getExpiration() {

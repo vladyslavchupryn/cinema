@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Collection;
@@ -55,7 +54,7 @@ public class Order {
 	@ManyToMany
 	@JoinTable(
 		name = "OrdersCorrelations",
-		joinColumns =  {@JoinColumn(name = "orderID")},
+		joinColumns = {@JoinColumn(name = "orderID")},
 		inverseJoinColumns = {@JoinColumn(name = "correlationID")}
 	)
 	private Collection<Correlation> ordersCorrelationsesById;
