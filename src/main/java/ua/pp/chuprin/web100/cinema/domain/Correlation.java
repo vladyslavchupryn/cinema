@@ -13,7 +13,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Correlations")
+@Table(name = "\"Correlations\"")
 public class Correlation {
 
 	@Column(

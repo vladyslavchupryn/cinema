@@ -15,7 +15,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Sessions")
+@Table(name = "\"Sessions\"")
 public class Session {
 	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id

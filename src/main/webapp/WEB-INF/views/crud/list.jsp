@@ -7,16 +7,19 @@
 
 <h2 class="text-center">Films</h2>
 
+<spring:url var="base" value="/" />
+<c:set var="crud" scope="request" value="${base}${path}/"/>
+
 <a class="btn btn-primary" href="${crud}create">CREATE</a>
 <br/>
 <table class="table table-striped table-bordered table-hover">
 	<thead>
 	<th>#</th>
-	<c:forEach var="column" items="${listColumns}">
+	<c:forEach var="current" items="${columns}">
 		<th>
-			${column}
-				<a class="icon-large icon-arrow-down pull-right" href="${column}-asc"></a>
-				<a class="icon-large icon-arrow-up pull-right" href="${column}-desc"></a>
+			${current}
+				<a class="icon-large icon-arrow-down pull-right" href="${current}-asc"></a>
+				<a class="icon-large icon-arrow-up pull-right" href="${current}-desc"></a>
 		</th>
 	</c:forEach>
 	<th class="list-icon-cell"></th>
@@ -28,8 +31,8 @@
 			<c:forEach items="${list}" var="current">
 				<tr>
 					<td><%=number++%></td>
-					<c:forEach var="column" items="${listColumns}">
-						<td>${current[column]}</td>
+					<c:forEach var="currentColumn" items="${columns}">
+						<td>${current[currentColumn]}</td>
 					</c:forEach>
 					<td>
 						<a href="${crud}view/${current.id}" class="list-icon icon-eye-open"></a>
@@ -53,13 +56,15 @@
 		initPaginator(${pageStart}, ${pageEnd}, ${count},'${path}/list');
 	})
 </script>
-<div >
-	<div class="text-left" style="float: left;">From ${pageStart+1} to ${pageEnd} of ${count}</div>
-	<div class="pagination text-right">
-		<ul>
-			<li class="pagination-prev"><a href="#">Prev</a></li>
-			<li class="pagination-next"><a href="#">Next</a></li>
-		</ul>
+<c:if test="${count > 0}">
+	<div >
+		<div class="text-left" style="float: left;">From ${pageStart+1} to ${pageEnd} of ${count}</div>
+		<div class="pagination text-right">
+			<ul>
+				<li class="pagination-prev"><a href="#">Prev</a></li>
+				<li class="pagination-next"><a href="#">Next</a></li>
+			</ul>
+		</div>
 	</div>
-</div>
+</c:if>
 <a class="btn btn-primary" class = "text-right" href="${crud}create">CREATE</a>

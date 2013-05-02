@@ -2,24 +2,21 @@ package ua.pp.chuprin.web100.cinema.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import ua.pp.chuprin.web100.cinema.domain.Film;
-import ua.pp.chuprin.web100.cinema.domain.PlaceType;
-import ua.pp.chuprin.web100.cinema.service.FilmService;
+import ua.pp.chuprin.web100.cinema.domain.__template__;
+import ua.pp.chuprin.web100.cinema.service.__template__Service;
 import ua.pp.chuprin.web100.cinema.tools.crud.CRUDController;
 import ua.pp.chuprin.web100.cinema.tools.crud.CRUDService;
 
 @Controller
 @RequestMapping("/film")
-public class FilmController extends CRUDController {
+public class __template__Controller extends CRUDController {
 
 	@Autowired
-	private FilmService service;
+	private __template__Service service;
 
 	protected Object create() {
-		return new Film();
+		return new __template__();
 	}
 
 	@Override
@@ -48,10 +45,5 @@ public class FilmController extends CRUDController {
 
 	private String[] allColumns() {
 		return new String[]{"name", "author", "country", "genre", "year", "duration"};
-	}
-
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@ModelAttribute Film object) {
-		return saveImpl(object);
 	}
 }

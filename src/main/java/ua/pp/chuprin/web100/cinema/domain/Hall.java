@@ -12,7 +12,7 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Halls")
+@Table(name = "\"Halls\"")
 public class Hall {
 	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id

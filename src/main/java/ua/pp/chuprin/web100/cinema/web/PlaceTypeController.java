@@ -5,21 +5,20 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import ua.pp.chuprin.web100.cinema.domain.Film;
 import ua.pp.chuprin.web100.cinema.domain.PlaceType;
-import ua.pp.chuprin.web100.cinema.service.FilmService;
+import ua.pp.chuprin.web100.cinema.service.PlaceTypeService;
 import ua.pp.chuprin.web100.cinema.tools.crud.CRUDController;
 import ua.pp.chuprin.web100.cinema.tools.crud.CRUDService;
 
 @Controller
-@RequestMapping("/film")
-public class FilmController extends CRUDController {
+@RequestMapping("/placeType")
+public class PlaceTypeController extends CRUDController {
 
 	@Autowired
-	private FilmService service;
+	private PlaceTypeService service;
 
 	protected Object create() {
-		return new Film();
+		return new PlaceType();
 	}
 
 	@Override
@@ -38,7 +37,7 @@ public class FilmController extends CRUDController {
 
 	@Override
 	protected String path() {
-		return "film";
+		return "placeType";
 	}
 
 	@Override
@@ -47,11 +46,11 @@ public class FilmController extends CRUDController {
 	}
 
 	private String[] allColumns() {
-		return new String[]{"name", "author", "country", "genre", "year", "duration"};
+		return new String[]{"name"};
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@ModelAttribute Film object) {
+	public String save(@ModelAttribute PlaceType object) {
 		return saveImpl(object);
 	}
 }

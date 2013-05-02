@@ -14,7 +14,7 @@ import javax.persistence.Table;
 import java.util.Collection;
 
 @Entity
-@Table(name = "Categories")
+@Table(name = "\"Categories\"")
 public class Category {
 
 	@Column(

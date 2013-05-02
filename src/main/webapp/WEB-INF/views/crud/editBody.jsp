@@ -13,16 +13,18 @@
 	});
 </script>
 
-<spring:url var="saveAction" value='/${path}/save'/>
-<form:form method="post" action="${saveAction}" id="crud-form"
+<spring:url var="base" value="/" />
+<c:set var="crud" scope="request" value="${base}${path}/"/>
+
+<form:form method="post" action="${crud}save" id="crud-form"
            commandName="object" class="form-horizontal" >
 	<form:hidden path="id"/>
 
-	<c:forEach var="column" items="${editColumns}">
+	<c:forEach var="current" items="${columns}">
 		<div class="control-group">
-			<label class="control-label">${column}:</label>
+			<label class="control-label">${current}:</label>
 			<div class="controls">
-				<form:input path="${column}" />
+				<form:input path="${current}" />
 			</div>
 		</div>
 	</c:forEach>

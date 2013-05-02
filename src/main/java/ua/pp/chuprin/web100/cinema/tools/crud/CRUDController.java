@@ -2,7 +2,6 @@ package ua.pp.chuprin.web100.cinema.tools.crud;
 
 import java.util.Map;
 
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,12 +14,11 @@ public abstract class CRUDController {
 	public String create(Map<String, Object> variables) {
 		variables.put("object", create());
 
-		variables.put("editColumns", editColumns());
+		variables.put("columns", editColumns());
+		variables.put("path", path());
 
 		return "crud/edit";
 	}
-
-	protected abstract Object create();
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
 	@ResponseBody
@@ -43,12 +41,11 @@ public abstract class CRUDController {
 		variables.put("object", service().get(id));
 		variables.put("id", id);
 
-		variables.put("editColumns", editColumns());
+		variables.put("columns", editColumns());
+		variables.put("path", path());
 
 		return "crud/edit";
 	}
-
-	protected abstract String[] editColumns();
 
 	@RequestMapping("/")
 	public String home() {
@@ -69,19 +66,10 @@ public abstract class CRUDController {
 		variables.put("pageStart", pageStart);
 		variables.put("pageEnd", pageEnd > count ? count : pageEnd);
 
-		variables.put("listColumns", listColumns());
+		variables.put("columns", listColumns());
 		variables.put("path", path());
 
 		return "crud/list";
-	}
-
-	protected abstract String[] listColumns();
-
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@ModelAttribute("object") Object object) {
-		service().save(object);
-
-		return "redirect:/" + path() + "/list";
 	}
 
 	@RequestMapping("/view/{id}")
@@ -97,11 +85,28 @@ public abstract class CRUDController {
 		variables.put("object", service().get(id));
 		variables.put("id", id);
 
+		variables.put("columns", viewColumns());
+		variables.put("path", path());
+
 		return "crud/view";
 	}
 
+	protected abstract Object create();
+
+	protected abstract String[] editColumns();
+
+	protected abstract String[] listColumns();
+
 	protected abstract String path();
 
+	protected String saveImpl(Object object) {
+		service().save(object);
+
+		return "redirect:/" + path() + "/list";
+	}
+
 	protected abstract CRUDService service();
+
+	protected abstract String[] viewColumns();
 
 }
