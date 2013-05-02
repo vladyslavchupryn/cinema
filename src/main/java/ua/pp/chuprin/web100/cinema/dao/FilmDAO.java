@@ -6,6 +6,8 @@ import ua.pp.chuprin.web100.cinema.domain.Film;
 import ua.pp.chuprin.web100.cinema.tools.SorterBuilder;
 
 public interface FilmDAO {
+	Long count();
+
 	void delete(int id);
 
 	Film getFilm(int id);

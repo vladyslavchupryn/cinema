@@ -17,6 +17,11 @@ public class FilmDAOImpl implements FilmDAO {
 	private SessionFactory factory;
 
 	@Override
+	public Long count() {
+		return (Long) getSession().createQuery("select count(*) from Film").iterate().next();
+	}
+
+	@Override
 	public void delete(int id) {
 		getSession().createQuery(
 			"delete " +

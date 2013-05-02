@@ -5,6 +5,8 @@ import java.util.Collection;
 import ua.pp.chuprin.web100.cinema.domain.Film;
 
 public interface FilmService {
+	Long count();
+
 	void delete(int id);
 
 	public Film get(Integer id);

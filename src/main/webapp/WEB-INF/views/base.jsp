@@ -60,6 +60,10 @@
 	        src="<spring:url value="/js/core/net.js" />"></script>
 	<script type="text/javascript"
 	        src="<spring:url value="/js/core/validation.js" />"></script>
+
+	<script type="text/javascript"
+	        src="<spring:url value="/js/core/pagination.js" />"></script>
+
 	<script type="text/javascript">
 		$(function () {
 			peekValidators();
@@ -85,6 +89,10 @@
 
 		.list-icon {
 			font-size: 1.5em;
+		}
+
+		dt, dd {
+			margin-bottom: 10px;
 		}
 	</style>
 </head>

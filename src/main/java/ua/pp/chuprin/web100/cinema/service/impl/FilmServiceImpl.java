@@ -20,6 +20,12 @@ public class FilmServiceImpl implements FilmService {
 	private SorterBuilder builder;
 
 	@Override
+	@Transactional(readOnly = true)
+	public Long count() {
+		return dao.count();
+	}
+
+	@Override
 	@Transactional
 	public void delete(int id) {
 		dao.delete(id);

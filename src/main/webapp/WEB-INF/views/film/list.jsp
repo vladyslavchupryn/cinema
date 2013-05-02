@@ -7,25 +7,29 @@
 
 <h2 class="text-center">Films</h2>
 
+<%Integer humanStart = (Integer) request.getAttribute("pageStart") + 1;%>
+
+
 <a class="btn btn-primary" href="<spring:url value="/film/create" />">CREATE</a>
 <br/>
-<table class="table table-striped table-bordered">
+<table class="table table-striped table-bordered table-hover">
 	<thead>
 	<th>#</th>
-	<th>NAME</th>
-	<th>AUTHOR</th>
-	<th>GENRE</th>
-	<th>COUNTRY</th>
-	<th>YEAR</th>
-	<th>DURATION</th>
+	<th>name <a class="icon-large icon-arrow-down pull-right" hfer=""></a><a class="icon-large icon-arrow-up pull-right" hfer=""></a></th>
+	<th>author</th>
+	<th>genre</th>
+	<th>country</th>
+	<th>year</th>
+	<th>duration</th>
 	<th class="list-icon-cell"></th>
 	</thead>
 	<tbody>
 	<c:choose>
 		<c:when test="${!empty list}">
+			<%Integer number = humanStart;%>
 			<c:forEach items="${list}" var="current">
 				<tr>
-					<td>1</td>
+					<td><%=number++%></td>
 					<td>${current.name}</td>
 					<td>${current.author}</td>
 					<td>${current.genre}</td>
@@ -48,4 +52,19 @@
 	</c:choose>
 	</tbody>
 </table>
+
+<script type="text/javascript">
+	$(function(){
+		initPaginator(${pageStart}, ${pageEnd}, ${count},'film/list');
+	})
+</script>
+<div >
+	<div class="text-left" style="float: left;">From <%=humanStart%> to ${pageEnd} of ${count}</div>
+	<div class="pagination text-right">
+		<ul>
+			<li class="pagination-prev"><a href="#">Prev</a></li>
+			<li class="pagination-next"><a href="#">Next</a></li>
+		</ul>
+	</div>
+</div>
 <a class="btn btn-primary" class = "text-right" href="<spring:url value="/film/create" />">CREATE</a>
