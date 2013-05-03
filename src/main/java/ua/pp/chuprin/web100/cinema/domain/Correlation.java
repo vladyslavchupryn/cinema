@@ -9,8 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Collection;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "\"Correlations\"")
@@ -37,7 +40,7 @@ public class Correlation {
 	private Integer id;
 
 	@Column(
-		name = "name",
+		name = "\"name\"",
 		nullable = false,
 		insertable = true,
 		updatable = true,
@@ -45,10 +48,12 @@ public class Correlation {
 		precision = 0
 	)
 	@Basic
+	@NotNull
+	@Length(min=3, max=127)
 	private String name;
 
 	@Column(
-		name = "percent",
+		name = "\"percent\"",
 		nullable = false,
 		insertable = true,
 		updatable = true,
@@ -59,8 +64,8 @@ public class Correlation {
 	private Float percent;
 
 	@Column(
-		name = "expiration",
-		nullable = false,
+		name = "\"expiration\"",
+		nullable = true,
 		insertable = true,
 		updatable = true,
 		length = 29,
@@ -69,8 +74,8 @@ public class Correlation {
 	@Basic
 	private Timestamp expiration;
 
-	@ManyToMany(mappedBy = "ordersCorrelationsesById")
-	private Collection<Order> ordersCorrelationsesById;
+	@ManyToMany(mappedBy = "correlations")
+	private Collection<Order> orders;
 
 	public Timestamp getExpiration() {
 		return expiration;
@@ -96,12 +101,12 @@ public class Correlation {
 		this.name = name;
 	}
 
-	public Collection<Order> getOrdersCorrelationsesById() {
-		return ordersCorrelationsesById;
+	public Collection<Order> getOrders() {
+		return orders;
 	}
 
-	public void setOrdersCorrelationsesById(Collection<Order> ordersCorrelationsesById) {
-		this.ordersCorrelationsesById = ordersCorrelationsesById;
+	public void setOrders(Collection<Order> ordersCorrelationsesById) {
+		this.orders = ordersCorrelationsesById;
 	}
 
 	public Float getPercent() {
@@ -137,5 +142,12 @@ public class Correlation {
 			return false;
 
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return name + ": "
+			+ (percent > 0.0 ? "+":"")
+			+ percent + "%";
 	}
 }

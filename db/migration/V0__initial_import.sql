@@ -23,6 +23,8 @@ CREATE TABLE "Sessions" (
 
     "start" timestamp  NOT NULL,
 
+    "percent" real NOT NULL DEFAULT 0.0,
+
     CONSTRAINT "Films_filmID"
         FOREIGN KEY("filmID")
         REFERENCES "Films"("id")
@@ -48,7 +50,7 @@ CREATE TABLE "Categories" (
     "typeID" int NOT NULL,
     "hallID" int NOT NULL,
 
-    "price" money NOT NULL,
+    "price" numeric(12,6) NOT NULL,
 
     CONSTRAINT "PlaceTypes_typeID"
         FOREIGN KEY("typeID")
@@ -83,7 +85,7 @@ CREATE TABLE "Correlations" (
 
     "name" varchar NOT NULL,
     "percent" real NOT NULL,
-    "expiration" timestamp NOT NULL
+    "expiration" timestamp
 );
 
 CREATE TABLE "Orders" (
@@ -93,7 +95,7 @@ CREATE TABLE "Orders" (
     "placeID" int NOT NULL,
 
     "customerName" varchar NOT NULL,
-    "price" money NOT NULL,
+    "price" numeric(12,6) NOT NULL,
     "comment" varchar,
 
     CONSTRAINT "Sessions_seasonID"

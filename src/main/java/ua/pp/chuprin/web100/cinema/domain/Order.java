@@ -3,6 +3,7 @@ package ua.pp.chuprin.web100.cinema.domain;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -13,6 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import java.util.Collection;
+import java.util.HashSet;
 
 @Entity
 @Table(name = "\"Orders\"")
@@ -31,33 +33,33 @@ public class Order {
 	)
 	private Integer id;
 
-	@Column(name = "customerName", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"customerName\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String customerName;
 
-	@Column(name = "price", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"price\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private Double price;
 
-	@Column(name = "comment", nullable = true, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"comment\"", nullable = true, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String comment;
 
-	@ManyToOne
-	@JoinColumn(name = "placeID", referencedColumnName = "id", nullable = false)
-	private Place placeByPlaceId;
+	@ManyToOne( fetch = FetchType.LAZY )
+	@JoinColumn(name = "\"placeID\"", referencedColumnName = "id", nullable = false)
+	private Place place;
 
-	@ManyToOne
-	@JoinColumn(name = "seasonID", referencedColumnName = "id", nullable = false)
-	private Session sessionBySeasonId;
+	@ManyToOne( fetch = FetchType.LAZY )
+	@JoinColumn(name = "\"seasonID\"", referencedColumnName = "id", nullable = false)
+	private Session session;
 
 	@ManyToMany
 	@JoinTable(
-		name = "OrdersCorrelations",
-		joinColumns = {@JoinColumn(name = "orderID")},
-		inverseJoinColumns = {@JoinColumn(name = "correlationID")}
+		name = "\"OrdersCorrelations\"",
+		joinColumns = {@JoinColumn(name = "\"orderID\"")},
+		inverseJoinColumns = {@JoinColumn(name = "\"correlationID\"")}
 	)
-	private Collection<Correlation> ordersCorrelationsesById;
+	private Collection<Correlation> correlations;
 
 	public String getComment() {
 		return comment;
@@ -83,20 +85,38 @@ public class Order {
 		this.id = id;
 	}
 
-	public Collection<Correlation> getOrdersCorrelationsesById() {
-		return ordersCorrelationsesById;
+	public Collection<Integer> getCorrelationIds() {
+		Collection<Integer> result = new HashSet<Integer>();
+		for(Correlation cur : this.correlations) {
+			result.add(cur.getId());
+		}
+
+		return result;
 	}
 
-	public void setOrdersCorrelationsesById(Collection<Correlation> ordersCorrelationsesById) {
-		this.ordersCorrelationsesById = ordersCorrelationsesById;
+	public void setCorrelationIds(Collection<Integer> correlations) {
+		this.correlations = new HashSet<Correlation>();
+		for(Integer currentId : correlations) {
+			Correlation currentCorrelation = new Correlation();
+			currentCorrelation.setId(currentId);
+			this.correlations.add(currentCorrelation);
+		}
 	}
 
-	public Place getPlaceByPlaceId() {
-		return placeByPlaceId;
+	public void setCorrelations(Collection<Correlation> correlations) {
+		this.correlations = correlations;
 	}
 
-	public void setPlaceByPlaceId(Place placeByPlaceId) {
-		this.placeByPlaceId = placeByPlaceId;
+	public Collection<Correlation> getCorrelations() {
+		return correlations;
+	}
+
+	public Place getPlace() {
+		return place;
+	}
+
+	public void setPlace(Place placeByPlaceId) {
+		this.place = placeByPlaceId;
 	}
 
 	public Double getPrice() {
@@ -107,12 +127,12 @@ public class Order {
 		this.price = price;
 	}
 
-	public Session getSessionBySeasonId() {
-		return sessionBySeasonId;
+	public Session getSession() {
+		return session;
 	}
 
-	public void setSessionBySeasonId(Session sessionBySeasonId) {
-		this.sessionBySeasonId = sessionBySeasonId;
+	public void setSession(Session sessionBySeasonId) {
+		this.session = sessionBySeasonId;
 	}
 
 	@Override
@@ -141,5 +161,10 @@ public class Order {
 			return false;
 
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return session + " - " + place + " - " + customerName;
 	}
 }

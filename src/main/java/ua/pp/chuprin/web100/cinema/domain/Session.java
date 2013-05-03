@@ -3,6 +3,7 @@ package ua.pp.chuprin.web100.cinema.domain;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -30,51 +31,59 @@ public class Session {
 	)
 	private Integer id;
 
-	@Column(name = "filmID", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-	@Basic
-	private Integer filmId;
-
-	@Column(name = "hallID", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-	@Basic
-	private Integer hallId;
-
-	@Column(name = "start", nullable = false, insertable = true, updatable = true, length = 29, precision = 6)
+	@Column(name = "\"start\"", nullable = false, insertable = true, updatable = true, length = 29, precision = 6)
 	@Basic
 	private Timestamp start;
 
-	@OneToMany(mappedBy = "sessionBySeasonId")
+	public Float getPercent() {
+		return percent;
+	}
+
+	public void setPercent(Float percent) {
+		this.percent = percent;
+	}
+
+	@Column(
+		name = "\"percent\"",
+		nullable = false,
+		insertable = true,
+		updatable = true,
+		length = 8,
+
+		precision = 8
+	)
+	@Basic
+	private Float percent;
+
+	@OneToMany(mappedBy = "session")
 	private Collection<Order> ordersesById;
 
-	@ManyToOne
-	@JoinColumn(name = "filmID", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-	private Film filmByFilmId;
-
-	@ManyToOne
-	@JoinColumn(name = "hallID", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
-	private Hall hallByHallId;
-
-	public Film getFilmByFilmId() {
-		return filmByFilmId;
+	public void setFilm(Film film) {
+		this.film = film;
 	}
 
-	public Integer getFilmId() {
-		return filmId;
+	public void setHall(Hall hall) {
+		this.hall = hall;
 	}
 
-	public void setFilmId(Integer filmId) {
-		this.filmId = filmId;
+	@ManyToOne(
+		fetch = FetchType.LAZY
+	)
+	@JoinColumn(name = "\"filmID\"", referencedColumnName = "id", nullable = false)
+	private Film film;
+
+	@ManyToOne(
+		fetch = FetchType.LAZY
+	)
+	@JoinColumn(name = "\"hallID\"", referencedColumnName = "id", nullable = false)
+	private Hall hall;
+
+	public Film getFilm() {
+		return film;
 	}
 
-	public Hall getHallByHallId() {
-		return hallByHallId;
-	}
-
-	public Integer getHallId() {
-		return hallId;
-	}
-
-	public void setHallId(Integer hallId) {
-		this.hallId = hallId;
+	public Hall getHall() {
+		return hall;
 	}
 
 	public Integer getId() {
@@ -104,9 +113,6 @@ public class Session {
 	@Override
 	public int hashCode() {
 		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (filmId != null ? filmId.hashCode() : 0);
-		result = 31 * result + (hallId != null ? hallId.hashCode() : 0);
-		result = 31 * result + (start != null ? start.hashCode() : 0);
 		return result;
 	}
 
@@ -117,15 +123,14 @@ public class Session {
 
 		Session session = (Session) o;
 
-		if (filmId != null ? !filmId.equals(session.filmId) : session.filmId != null)
-			return false;
-		if (hallId != null ? !hallId.equals(session.hallId) : session.hallId != null)
-			return false;
 		if (id != null ? !id.equals(session.id) : session.id != null)
-			return false;
-		if (start != null ? !start.equals(session.start) : session.start != null)
 			return false;
 
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return film + " - " + hall + " : " + start;
 	}
 }

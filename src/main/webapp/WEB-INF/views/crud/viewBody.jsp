@@ -6,7 +6,7 @@
 
 <dl class="dl-horizontal">
 	<c:forEach var="current" items="${columns}">
-		<dt>${current}:</dt>
-		<dd>${object[current]}</dd>
+		<dt><spring:message code="${path}.column.${current}"/>:</dt>
+		<dd><c:out value="${object[current]}"/></dd>
 	</c:forEach>
 </dl>

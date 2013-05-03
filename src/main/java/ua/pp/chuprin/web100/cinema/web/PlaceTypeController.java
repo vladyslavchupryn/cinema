@@ -2,9 +2,7 @@ package ua.pp.chuprin.web100.cinema.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import ua.pp.chuprin.web100.cinema.domain.PlaceType;
 import ua.pp.chuprin.web100.cinema.service.PlaceTypeService;
 import ua.pp.chuprin.web100.cinema.tools.crud.CRUDController;
@@ -12,26 +10,26 @@ import ua.pp.chuprin.web100.cinema.tools.crud.CRUDService;
 
 @Controller
 @RequestMapping("/placeType")
-public class PlaceTypeController extends CRUDController {
+public class PlaceTypeController extends CRUDController<PlaceType> {
 
 	@Autowired
 	private PlaceTypeService service;
 
-	protected Object create() {
+	protected PlaceType create() {
 		return new PlaceType();
 	}
 
 	@Override
-	protected String[] editColumns() {
+	protected Object[] editColumns() {
 		return allColumns();
 	}
 
-	protected String[] listColumns() {
+	protected Object[] listColumns() {
 		return allColumns();
 	}
 
 	@Override
-	protected String[] viewColumns() {
+	protected Object[] viewColumns() {
 		return allColumns();
 	}
 
@@ -41,16 +39,11 @@ public class PlaceTypeController extends CRUDController {
 	}
 
 	@Override
-	protected CRUDService service() {
+	protected CRUDService<PlaceType> service() {
 		return service;
 	}
 
-	private String[] allColumns() {
+	private Object[] allColumns() {
 		return new String[]{"name"};
-	}
-
-	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@ModelAttribute PlaceType object) {
-		return saveImpl(object);
 	}
 }

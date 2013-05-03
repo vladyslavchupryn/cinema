@@ -32,31 +32,31 @@ public class Film {
 	)
 	private Integer id;
 
-	@Column(name = "name", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"name\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String name;
 
-	@Column(name = "author", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"author\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String author;
 
-	@Column(name = "genre", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"genre\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String genre;
 
-	@Column(name = "country", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"country\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String country;
 
-	@Column(name = "year", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "\"year\"", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Basic
 	private Integer year;
 
-	@Column(name = "duration", nullable = false, insertable = true, updatable = true, length = 49, precision = 6)
+	@Column(name = "\"duration\"", nullable = false, insertable = true, updatable = true, length = 49, precision = 6)
 	@Type(type = "interval")
 	private Integer duration;
 
-	@OneToMany(mappedBy = "filmByFilmId")
+	@OneToMany(mappedBy = "film")
 	private Collection<Session> sessionsesById;
 
 	public String getAuthor() {
@@ -157,5 +157,10 @@ public class Film {
 			return false;
 
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return name + " (" + year + ")";
 	}
 }

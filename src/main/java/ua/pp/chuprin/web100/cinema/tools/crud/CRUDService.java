@@ -1,14 +1,16 @@
 package ua.pp.chuprin.web100.cinema.tools.crud;
 
-public interface CRUDService {
+import java.util.Collection;
+
+public interface CRUDService<T> {
 
 	Long count();
 
 	void delete(int id);
 
-	Object get(Integer id);
+	T get(Integer id);
 
-	Object list(int pageStart, int pageEnd, String sort);
+	Collection<T> list(int pageStart, int pageEnd, String sort);
 
-	void save(Object film);
+	void save(T film);
 }

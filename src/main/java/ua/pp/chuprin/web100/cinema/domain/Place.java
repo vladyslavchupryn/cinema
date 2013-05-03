@@ -3,6 +3,7 @@ package ua.pp.chuprin.web100.cinema.domain;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,34 +30,23 @@ public class Place {
 	)
 	private Integer id;
 
-	@Column(name = "categoryID", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
-	@Basic
-	private Integer categoryId;
-
-	@Column(name = "number", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
+	@Column(name = "\"number\"", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
 	@Basic
 	private Short number;
 
-	@OneToMany(mappedBy = "placeByPlaceId")
-	private Collection<Order> ordersesById;
+	@OneToMany(mappedBy = "place")
+	private Collection<Order> orders;
 
-	@ManyToOne
-	@JoinColumn(name = "categoryID", referencedColumnName = "id", nullable = false,
-		insertable = false,
-		updatable = false
-	)
-	private Category categoryByCategoryId;
+	@ManyToOne( fetch = FetchType.LAZY )
+	@JoinColumn(name = "\"categoryID\"", referencedColumnName = "id", nullable = false)
+	private Category category;
 
-	public Category getCategoryByCategoryId() {
-		return categoryByCategoryId;
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 
-	public Integer getCategoryId() {
-		return categoryId;
-	}
-
-	public void setCategoryId(Integer categoryId) {
-		this.categoryId = categoryId;
+	public Category getCategory() {
+		return category;
 	}
 
 	public Integer getId() {
@@ -75,18 +65,17 @@ public class Place {
 		this.number = number;
 	}
 
-	public Collection<Order> getOrdersesById() {
-		return ordersesById;
+	public Collection<Order> getOrders() {
+		return orders;
 	}
 
-	public void setOrdersesById(Collection<Order> ordersesById) {
-		this.ordersesById = ordersesById;
+	public void setOrders(Collection<Order> ordersesById) {
+		this.orders = ordersesById;
 	}
 
 	@Override
 	public int hashCode() {
 		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (categoryId != null ? categoryId.hashCode() : 0);
 		result = 31 * result + (number != null ? number.hashCode() : 0);
 		return result;
 	}
@@ -98,13 +87,14 @@ public class Place {
 
 		Place place = (Place) o;
 
-		if (categoryId != null ? !categoryId.equals(place.categoryId) : place.categoryId != null)
-			return false;
 		if (id != null ? !id.equals(place.id) : place.id != null)
-			return false;
-		if (number != null ? !number.equals(place.number) : place.number != null)
 			return false;
 
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return category.getHall() + " : " + number;
 	}
 }

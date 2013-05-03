@@ -5,7 +5,7 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<h2 class="text-center">View film</h2>
+<h2 class="text-center"><spring:message code="${path}.view.title"/></h2>
 <br/>
 
 <div class="span6 well" >

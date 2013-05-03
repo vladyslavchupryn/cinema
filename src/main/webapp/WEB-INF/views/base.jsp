@@ -49,6 +49,10 @@
 	      href="<spring:url value="/js/bootstrap/notify/css/bootstrap-notify.css" />"/>
 	<script type="text/javascript"
 	        src="<spring:url value="/js/bootstrap/notify/js/bootstrap-notify.js" />"></script>
+	<link rel="stylesheet"
+	      href="<spring:url value="/js/bootstrap/switch/bootstrapSwitch.css" />"/>
+	<script type="text/javascript"
+	        src="<spring:url value="/js/bootstrap/switch/bootstrapSwitch.js" />"></script>
 
 	<link rel="stylesheet"
 	      href="<spring:url value="/css/awesome/css/font-awesome.min.css" />"/>
@@ -68,7 +72,24 @@
 		$(function () {
 			peekValidators();
 			$(".chzn-select").chosen();
+			$("[rel='tooltip']").tooltip();
+
+			$("[hotkey]").each(function () {
+				var key = $(this).attr('hotkey');
+				var that=this;
+				ui.hotkey(key, function () {
+					if($(that).prop("tagName") == 'A'){
+						window.location=$(that).attr('href');
+					} else {
+						$(that).click();
+					}
+				});
+			});
+
+			$('.many-to-many input:checkbox').addClass('checkbox');
+
 		});
+
 
 		var BASE_URL = "<spring:url value="/" />";
 	</script>
@@ -93,6 +114,24 @@
 
 		dt, dd {
 			margin-bottom: 10px;
+		}
+
+		.uppercase {
+			text-transform: uppercase;
+		}
+
+		.link-button, .link-button:hover {
+			text-decoration: none;
+			color: #000000;
+		}
+
+		.inline {
+			display:inline;
+		}
+
+		.many-to-many label {
+			display:inline;
+			margin-left: 10px;
 		}
 	</style>
 </head>

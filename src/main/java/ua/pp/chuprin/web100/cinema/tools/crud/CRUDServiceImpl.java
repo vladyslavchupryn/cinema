@@ -7,12 +7,12 @@ import org.springframework.transaction.annotation.Transactional;
 import ua.pp.chuprin.web100.cinema.domain.Film;
 import ua.pp.chuprin.web100.cinema.tools.SorterBuilder;
 
-public abstract class CRUDServiceImpl implements CRUDService {
+public abstract class CRUDServiceImpl<T> implements CRUDService<T> {
 
 	@Autowired
 	private SorterBuilder builder;
 
-	protected abstract CRUDDao dao();
+	protected abstract CRUDDao<T> dao();
 
 	@Override
 	@Transactional(readOnly = true)
@@ -28,23 +28,19 @@ public abstract class CRUDServiceImpl implements CRUDService {
 
 	@Override
 	@Transactional(readOnly = true)
-	public Object get(Integer id) {
-		if (id == null) {
-			return new Film();
-		} else {
-			return dao().get(id);
-		}
+	public T get(Integer id) {
+		return dao().get(id);
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Collection list(int pageStart, int countPerPage, String sort) {
+	public Collection<T> list(int pageStart, int countPerPage, String sort) {
 		return dao().list(pageStart, countPerPage, builder.build(sort, Film.class));
 	}
 
 	@Override
 	@Transactional
-	public void save(Object film) {
+	public void save(T film) {
 		dao().save(film);
 	}
 }

@@ -1,14 +1,38 @@
 package ua.pp.chuprin.web100.cinema.tools.crud;
 
+import javax.validation.Valid;
+import java.beans.PropertyEditorSupport;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-public abstract class CRUDController {
+public abstract class CRUDController<T> {
+
+	@InitBinder
+	public void binder(WebDataBinder binder) {
+		binder.registerCustomEditor(Timestamp.class,
+			new PropertyEditorSupport() {
+				public void setAsText(String value) {
+					try {
+						Date parsedDate = new SimpleDateFormat("dd.MM.yyyy HH:mm").parse(value);
+						setValue(new Timestamp(parsedDate.getTime()));
+					} catch (ParseException e) {
+						setValue(null);
+					}
+				}
+			});
+	}
 
 	@RequestMapping(value = "/create")
 	public String create(Map<String, Object> variables) {
@@ -17,7 +41,7 @@ public abstract class CRUDController {
 		variables.put("columns", editColumns());
 		variables.put("path", path());
 
-		return "crud/edit";
+		return editPage();
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
@@ -44,7 +68,7 @@ public abstract class CRUDController {
 		variables.put("columns", editColumns());
 		variables.put("path", path());
 
-		return "crud/edit";
+		return editPage();
 	}
 
 	@RequestMapping("/")
@@ -68,8 +92,16 @@ public abstract class CRUDController {
 
 		variables.put("columns", listColumns());
 		variables.put("path", path());
+		variables.put("sort", sort);
 
 		return "crud/list";
+	}
+
+	@RequestMapping(value = "/save", method = RequestMethod.POST)
+	public String save(@Valid @ModelAttribute T object) {
+		service().save(object);
+
+		return "redirect:/" + path() + "/list";
 	}
 
 	@RequestMapping("/view/{id}")
@@ -91,22 +123,19 @@ public abstract class CRUDController {
 		return "crud/view";
 	}
 
-	protected abstract Object create();
+	protected abstract T create();
 
-	protected abstract String[] editColumns();
+	protected abstract Object[] editColumns();
 
-	protected abstract String[] listColumns();
+	protected String editPage() {
+		return "crud/edit";
+	}
+
+	protected abstract Object[] listColumns();
 
 	protected abstract String path();
 
-	protected String saveImpl(Object object) {
-		service().save(object);
+	protected abstract CRUDService<T> service();
 
-		return "redirect:/" + path() + "/list";
-	}
-
-	protected abstract CRUDService service();
-
-	protected abstract String[] viewColumns();
-
+	protected abstract Object[] viewColumns();
 }

@@ -10,6 +10,12 @@
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
 	</context-param>
 
+	<!-- Защита от XSS -->
+	<context-param>
+		<param-name>defaultHtmlEscape</param-name>
+		<param-value>true</param-value>
+	</context-param>
+
 	<!--<listener>-->
 		<!--<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>-->
 	<!--</listener>-->

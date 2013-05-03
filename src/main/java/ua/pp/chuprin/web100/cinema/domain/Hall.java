@@ -27,22 +27,27 @@ public class Hall {
 	)
 	private Integer id;
 
-	@Column(name = "name", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"name\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String name;
 
-	@OneToMany(mappedBy = "hallByHallId")
-	private Collection<Category> categoriesesById;
-
-	@OneToMany(mappedBy = "hallByHallId")
-	private Collection<Session> sessionsesById;
-
-	public Collection<Category> getCategoriesesById() {
-		return categoriesesById;
+	@Override
+	public String toString() {
+		return name;
 	}
 
-	public void setCategoriesesById(Collection<Category> categoriesesById) {
-		this.categoriesesById = categoriesesById;
+	@OneToMany(mappedBy = "hall")
+	private Collection<Category> categories;
+
+	@OneToMany(mappedBy = "hall")
+	private Collection<Session> sessions;
+
+	public Collection<Category> getCategories() {
+		return categories;
+	}
+
+	public void setCategories(Collection<Category> categoriesesById) {
+		this.categories = categoriesesById;
 	}
 
 	public Integer getId() {
@@ -61,12 +66,12 @@ public class Hall {
 		this.name = name;
 	}
 
-	public Collection<Session> getSessionsesById() {
-		return sessionsesById;
+	public Collection<Session> getSessions() {
+		return sessions;
 	}
 
-	public void setSessionsesById(Collection<Session> sessionsesById) {
-		this.sessionsesById = sessionsesById;
+	public void setSessions(Collection<Session> sessionsesById) {
+		this.sessions = sessionsesById;
 	}
 
 	@Override

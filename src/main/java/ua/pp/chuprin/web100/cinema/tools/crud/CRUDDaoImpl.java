@@ -5,9 +5,10 @@ import java.util.Collection;
 import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import ua.pp.chuprin.web100.cinema.domain.Category;
 import ua.pp.chuprin.web100.cinema.tools.SorterBuilder;
 
-public abstract class CRUDDaoImpl implements CRUDDao {
+public abstract class CRUDDaoImpl<T> implements CRUDDao<T> {
 
 	@Autowired
 	private SessionFactory factory;
@@ -29,12 +30,12 @@ public abstract class CRUDDaoImpl implements CRUDDao {
 	}
 
 	@Override
-	public Object get(int id) {
-		return getSession().get(domain(), id);
+	public T get(int id) {
+		return (T) getSession().get(domain(), id);
 	}
 
 	@Override
-	public Collection list(int start, int count, SorterBuilder.Sorter sorter) {
+	public Collection<T> list(int start, int count, SorterBuilder.Sorter sorter) {
 		return getSession().createQuery("from " + domain().getName() + sorter.hql())
 			.setFirstResult(start)
 			.setMaxResults(count)
@@ -42,13 +43,13 @@ public abstract class CRUDDaoImpl implements CRUDDao {
 	}
 
 	@Override
-	public void save(Object film) {
-		getSession().save(film);
+	public void save(T film) {
+		getSession().saveOrUpdate(film);
 	}
 
-	protected abstract Class domain();
+	protected abstract Class<T> domain();
 
-	private Session getSession() {
+	protected Session getSession() {
 		return factory.getCurrentSession();
 	}
 }

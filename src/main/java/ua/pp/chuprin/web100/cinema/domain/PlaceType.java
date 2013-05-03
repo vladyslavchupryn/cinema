@@ -28,19 +28,19 @@ public class PlaceType {
 	)
 	private Integer id;
 
-	@Column(name = "name", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"name\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
 	@Basic
 	private String name;
 
-	@OneToMany(mappedBy = "placeTypeByTypeId")
-	private Collection<Category> categoriesesById;
+	@OneToMany(mappedBy = "placeType")
+	private Collection<Category> categories;
 
-	public Collection<Category> getCategoriesesById() {
-		return categoriesesById;
+	public Collection<Category> getCategories() {
+		return categories;
 	}
 
-	public void setCategoriesesById(Collection<Category> categoriesesById) {
-		this.categoriesesById = categoriesesById;
+	public void setCategories(Collection<Category> categoriesesById) {
+		this.categories = categoriesesById;
 	}
 
 	public Integer getId() {
@@ -52,6 +52,11 @@ public class PlaceType {
 	}
 
 	public String getName() {
+		return name;
+	}
+
+	@Override
+	public String toString() {
 		return name;
 	}
 

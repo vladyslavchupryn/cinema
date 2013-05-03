@@ -6,10 +6,10 @@ import ua.pp.chuprin.web100.cinema.domain.Film;
 import ua.pp.chuprin.web100.cinema.tools.crud.CRUDDaoImpl;
 
 @Repository
-public class FilmDAOImpl extends CRUDDaoImpl implements FilmDAO {
+public class FilmDAOImpl extends CRUDDaoImpl<Film> implements FilmDAO {
 
 	@Override
-	protected Class domain() {
+	protected Class<Film> domain() {
 		return Film.class;
 	}
 }

@@ -31,8 +31,6 @@
 	<!-- Защита от csrf -->
 	<bean name="requestDataValueProcessor"
 	      class="ua.pp.chuprin.web100.cinema.tools.csrf.CSRFRequestDataValueProcessor"/>
-	<mvc:interceptors>
-		<bean class="ua.pp.chuprin.web100.cinema.tools.csrf.CSRFHandlerInterceptor"/>
-	</mvc:interceptors>
+
 
 </beans>

@@ -6,10 +6,10 @@ import ua.pp.chuprin.web100.cinema.domain.PlaceType;
 import ua.pp.chuprin.web100.cinema.tools.crud.CRUDDaoImpl;
 
 @Repository
-public class PlaceTypeDAOImpl extends CRUDDaoImpl implements PlaceTypeDAO {
+public class PlaceTypeDAOImpl extends CRUDDaoImpl<PlaceType> implements PlaceTypeDAO {
 
 	@Override
-	protected Class domain() {
+	protected Class<PlaceType> domain() {
 		return PlaceType.class;
 	}
 }

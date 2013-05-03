@@ -3,6 +3,7 @@ package ua.pp.chuprin.web100.cinema.domain;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -38,7 +39,7 @@ public class Category {
 	private Integer id;
 
 	@Column(
-		name = "price",
+		name = "\"price\"",
 		nullable = false,
 		insertable = true,
 		updatable = true,
@@ -48,31 +49,39 @@ public class Category {
 	@Basic
 	private Double price;
 
-	@ManyToOne
-	@JoinColumn(
-		name = "hallID",
-		referencedColumnName = "id",
-		nullable = false
+	@ManyToOne (
+		fetch = FetchType.LAZY
 	)
-	private Hall hallByHallId;
-
-	@ManyToOne
 	@JoinColumn(
-		name = "typeID",
+		name = "\"hallID\"",
 		referencedColumnName = "id",
-		nullable = false
+		nullable = false,
+		updatable = true,
+		insertable = true
 	)
-	private PlaceType placeTypeByTypeId;
+	private Hall hall;
 
-	@OneToMany(mappedBy = "categoryByCategoryId")
-	private Collection<Place> placesesById;
+	@ManyToOne (
+		fetch = FetchType.LAZY
+	)
+	@JoinColumn(
+		name = "\"typeID\"",
+		referencedColumnName = "id",
+		nullable = false,
+		updatable = true,
+		insertable = true
+	)
+	private PlaceType placeType;
 
-	public Hall getHallByHallId() {
-		return hallByHallId;
+	@OneToMany(mappedBy = "category")
+	private Collection<Place> places;
+
+	public Hall getHall() {
+		return hall;
 	}
 
-	public void setHallByHallId(Hall hallByHallId) {
-		this.hallByHallId = hallByHallId;
+	public void setHall(Hall hallByHallId) {
+		this.hall = hallByHallId;
 	}
 
 	public Integer getId() {
@@ -83,20 +92,20 @@ public class Category {
 		this.id = id;
 	}
 
-	public PlaceType getPlaceTypeByTypeId() {
-		return placeTypeByTypeId;
+	public PlaceType getPlaceType() {
+		return placeType;
 	}
 
-	public void setPlaceTypeByTypeId(PlaceType placeTypeByTypeId) {
-		this.placeTypeByTypeId = placeTypeByTypeId;
+	public void setPlaceType(PlaceType placeTypeByTypeId) {
+		this.placeType = placeTypeByTypeId;
 	}
 
-	public Collection<Place> getPlacesesById() {
-		return placesesById;
+	public Collection<Place> getPlaces() {
+		return places;
 	}
 
-	public void setPlacesesById(Collection<Place> placesesById) {
-		this.placesesById = placesesById;
+	public void setPlaces(Collection<Place> placesesById) {
+		this.places = placesesById;
 	}
 
 	public Double getPrice() {
@@ -126,5 +135,10 @@ public class Category {
 			return false;
 
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return hall + " - " + placeType;
 	}
 }
