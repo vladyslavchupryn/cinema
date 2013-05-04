@@ -20,16 +20,16 @@ public class PlaceTypeController extends CRUDController<PlaceType> {
 	}
 
 	@Override
-	protected Object[] editColumns() {
+	protected Object[] editMetadata() {
 		return allColumns();
 	}
 
-	protected Object[] listColumns() {
+	protected Object[] listMetadata() {
 		return allColumns();
 	}
 
 	@Override
-	protected Object[] viewColumns() {
+	protected Object[] viewMetadata() {
 		return allColumns();
 	}
 

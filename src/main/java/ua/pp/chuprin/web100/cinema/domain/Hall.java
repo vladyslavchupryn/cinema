@@ -9,7 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "\"Halls\"")
@@ -27,8 +30,10 @@ public class Hall {
 	)
 	private Integer id;
 
-	@Column(name = "\"name\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"name\"", nullable = false, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
+	@NotNull
+	@Length(min = 3, max = 126)
 	private String name;
 
 	@Override

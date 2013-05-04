@@ -6,10 +6,14 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<h2 class="text-center"><spring:message code="${path}.list.title"/></h2>
-
 <spring:url var="base" value="/" />
 <c:set var="crud" scope="request" value="${base}${path}/"/>
+
+<ul class="breadcrumb">
+	<li><a href="${base}"><spring:message code="project.name"/></a> <span class="divider">/</span></li>
+	<li class="active"><spring:message code="${path}.list.title"/></li>
+</ul>
+
 <script type="text/javascript">
 	function decrement(selector) {
 		$(selector).text(parseInt($(selector).text())-1);

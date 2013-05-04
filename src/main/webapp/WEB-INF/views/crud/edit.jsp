@@ -5,11 +5,15 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
-<h2 class="text-center">
-	<spring:message code="${path}.edit.title"/>
-</h2>
-<br/>
+<spring:url var="base" value="/"/>
+<c:set var="crud" scope="request" value="${base}${path}/"/>
 
-<div class="span6 well well-large" >
+<ul class="breadcrumb">
+	<li><a href="${base}"><spring:message code="project.name"/></a> <span class="divider">/</span></li>
+	<li><a href="${crud}/list"><spring:message code="${path}.list.title"/></a> <span class="divider">/</span></li>
+	<li class="active"><spring:message code="${path}.view.title"/></li>
+</ul>
+
+<div class="well well-large" >
 	<tiles:insertAttribute name="editBody"/>
 </div>

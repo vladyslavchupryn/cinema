@@ -9,6 +9,8 @@ public interface CRUDDao<T> {
 
 	void delete(int id);
 
+	<A> Collection<A> findAll(Class<A> type);
+
 	T get(int id);
 
 	Collection<T> list(int start, int count, SorterBuilder.Sorter build);

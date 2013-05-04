@@ -12,6 +12,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 @Entity
@@ -32,13 +35,17 @@ public class Place {
 
 	@Column(name = "\"number\"", nullable = false, insertable = true, updatable = true, length = 5, precision = 0)
 	@Basic
+	@NotNull
+	@Min(0)
 	private Short number;
 
 	@OneToMany(mappedBy = "place")
 	private Collection<Order> orders;
 
-	@ManyToOne( fetch = FetchType.LAZY )
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "\"categoryID\"", referencedColumnName = "id", nullable = false)
+	@NotNull
+
 	private Category category;
 
 	public void setCategory(Category category) {

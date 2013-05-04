@@ -20,7 +20,7 @@ public class CategoryController extends CRUDController<Category> {
 	}
 
 	@Override
-	protected Object[] editColumns() {
+	protected Object[] editMetadata() {
 		return new Object[]{
 			"price",
 			new Object[]{
@@ -36,12 +36,12 @@ public class CategoryController extends CRUDController<Category> {
 		};
 	}
 
-	protected Object[] listColumns() {
+	protected Object[] listMetadata() {
 		return allColumns();
 	}
 
 	@Override
-	protected Object[] viewColumns() {
+	protected Object[] viewMetadata() {
 		return allColumns();
 	}
 

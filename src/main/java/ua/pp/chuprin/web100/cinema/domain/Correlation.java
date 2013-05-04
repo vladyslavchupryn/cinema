@@ -44,12 +44,12 @@ public class Correlation {
 		nullable = false,
 		insertable = true,
 		updatable = true,
-		length = 2147483647,
+		length = 126,
 		precision = 0
 	)
 	@Basic
 	@NotNull
-	@Length(min=3, max=127)
+	@Length(min = 3, max = 126)
 	private String name;
 
 	@Column(
@@ -61,6 +61,7 @@ public class Correlation {
 		precision = 8
 	)
 	@Basic
+	@NotNull
 	private Float percent;
 
 	@Column(
@@ -147,7 +148,7 @@ public class Correlation {
 	@Override
 	public String toString() {
 		return name + ": "
-			+ (percent > 0.0 ? "+":"")
+			+ (percent > 0.0 ? "+" : "")
 			+ percent + "%";
 	}
 }

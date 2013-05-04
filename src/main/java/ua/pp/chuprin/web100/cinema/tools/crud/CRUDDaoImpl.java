@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.classic.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.pp.chuprin.web100.cinema.domain.Category;
+import ua.pp.chuprin.web100.cinema.domain.Film;
 import ua.pp.chuprin.web100.cinema.tools.SorterBuilder;
 
 public abstract class CRUDDaoImpl<T> implements CRUDDao<T> {
@@ -27,6 +28,11 @@ public abstract class CRUDDaoImpl<T> implements CRUDDao<T> {
 				"where " +
 				"   id = :id"
 		).setInteger("id", id).executeUpdate();
+	}
+
+	@Override
+	public <A> Collection<A> findAll(Class<A> type) {
+		return getSession().createQuery("from " + type.getCanonicalName()).list();
 	}
 
 	@Override

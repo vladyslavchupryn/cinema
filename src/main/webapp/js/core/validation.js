@@ -1,31 +1,22 @@
-function peekValidators() {
-    $('.date-in-milli').datepicker({
-        dateFormat: '@',
-        showAnim: 'slideDown',
-        changeMonth: true,
-        changeYear: true
-    });
+function peekValidators(language) {
+	$('input[java-type="java.sql.Timestamp"]').datetimepicker({
+		format: 'yyyy-mm-dd hh:ii:ss',
+		autoclose: true,
+		language : language
+	});
 
-    $(".decimal").numeric();
-    $(".positive-decimal").numeric({
-        negative: false
-    }, function () {
-        alert("No negative values");
-        this.value = "";
-        this.focus();
-    });
+	$(".decimal")
+		.add('input[java-type="java.lang.Float"]')
+		.add('input[java-type="java.lang.Double"]').numeric();
+	$(".positive-decimal").numeric({
+		negative: false
+	});
 
-    $(".integer").numeric(false, function () {
-        alert("Integers only");
-        this.value = "";
-        this.focus();
-    });
-    $(".positive-integer").numeric({
-        decimal: false,
-        negative: false
-    }, function () {
-        alert("Positive integers only");
-        this.value = "";
-        this.focus();
-    });
+	$(".integer")
+		.add('input[java-type="java.lang.Integer"]')
+		.add('input[java-type="java.lang.Short"]').numeric();
+	$(".positive-integer").numeric({
+		decimal : false,
+		negative: false
+	});
 }

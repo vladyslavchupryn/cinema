@@ -28,7 +28,7 @@ public class SessionController extends CRUDController<Session> {
 	}
 
 	@Override
-	protected Object[] editColumns() {
+	protected Object[] editMetadata() {
 		return new Object[]{
 			"start",
 			new Object[]{
@@ -45,7 +45,7 @@ public class SessionController extends CRUDController<Session> {
 		};
 	}
 
-	protected Object[] listColumns() {
+	protected Object[] listMetadata() {
 		return allColumns();
 	}
 
@@ -60,7 +60,7 @@ public class SessionController extends CRUDController<Session> {
 	}
 
 	@Override
-	protected Object[] viewColumns() {
+	protected Object[] viewMetadata() {
 		return allColumns();
 	}
 

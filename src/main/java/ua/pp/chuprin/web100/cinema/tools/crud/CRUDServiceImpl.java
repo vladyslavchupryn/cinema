@@ -27,6 +27,11 @@ public abstract class CRUDServiceImpl<T> implements CRUDService<T> {
 	}
 
 	@Override
+	public <A> Collection<A> findAll(Class<A> type) {
+		return dao().findAll(type);
+	}
+
+	@Override
 	@Transactional(readOnly = true)
 	public T get(Integer id) {
 		return dao().get(id);

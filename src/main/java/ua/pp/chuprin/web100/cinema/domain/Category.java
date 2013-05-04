@@ -12,7 +12,10 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
+
+import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 @Entity
 @Table(name = "\"Categories\"")
@@ -43,13 +46,15 @@ public class Category {
 		nullable = false,
 		insertable = true,
 		updatable = true,
-		length = 2147483647,
+		length = 126,
 		precision = 0
 	)
 	@Basic
+	@NotNull
+	@CRUD
 	private Double price;
 
-	@ManyToOne (
+	@ManyToOne(
 		fetch = FetchType.LAZY
 	)
 	@JoinColumn(
@@ -59,9 +64,11 @@ public class Category {
 		updatable = true,
 		insertable = true
 	)
+	@NotNull
+	@CRUD
 	private Hall hall;
 
-	@ManyToOne (
+	@ManyToOne(
 		fetch = FetchType.LAZY
 	)
 	@JoinColumn(
@@ -71,6 +78,8 @@ public class Category {
 		updatable = true,
 		insertable = true
 	)
+	@NotNull
+	@CRUD
 	private PlaceType placeType;
 
 	@OneToMany(mappedBy = "category")

@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Collection;
 
@@ -33,15 +35,8 @@ public class Session {
 
 	@Column(name = "\"start\"", nullable = false, insertable = true, updatable = true, length = 29, precision = 6)
 	@Basic
+	@NotNull
 	private Timestamp start;
-
-	public Float getPercent() {
-		return percent;
-	}
-
-	public void setPercent(Float percent) {
-		this.percent = percent;
-	}
 
 	@Column(
 		name = "\"percent\"",
@@ -58,32 +53,34 @@ public class Session {
 	@OneToMany(mappedBy = "session")
 	private Collection<Order> ordersesById;
 
-	public void setFilm(Film film) {
-		this.film = film;
-	}
-
-	public void setHall(Hall hall) {
-		this.hall = hall;
-	}
-
 	@ManyToOne(
 		fetch = FetchType.LAZY
 	)
 	@JoinColumn(name = "\"filmID\"", referencedColumnName = "id", nullable = false)
+
 	private Film film;
 
 	@ManyToOne(
 		fetch = FetchType.LAZY
 	)
 	@JoinColumn(name = "\"hallID\"", referencedColumnName = "id", nullable = false)
+
 	private Hall hall;
 
 	public Film getFilm() {
 		return film;
 	}
 
+	public void setFilm(Film film) {
+		this.film = film;
+	}
+
 	public Hall getHall() {
 		return hall;
+	}
+
+	public void setHall(Hall hall) {
+		this.hall = hall;
 	}
 
 	public Integer getId() {
@@ -100,6 +97,14 @@ public class Session {
 
 	public void setOrdersesById(Collection<Order> ordersesById) {
 		this.ordersesById = ordersesById;
+	}
+
+	public Float getPercent() {
+		return percent;
+	}
+
+	public void setPercent(Float percent) {
+		this.percent = percent;
 	}
 
 	public Timestamp getStart() {

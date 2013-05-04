@@ -8,6 +8,8 @@ public interface CRUDService<T> {
 
 	void delete(int id);
 
+	<A> Collection<A> findAll(Class<A> type);
+
 	T get(Integer id);
 
 	Collection<T> list(int pageStart, int pageEnd, String sort);

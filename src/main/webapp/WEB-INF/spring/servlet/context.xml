@@ -14,7 +14,7 @@
 		которые доступны только ему -->
 
 	<!-- Разрешаем использование аннотаций Spring MVC (то есть @Controller и.т.д) -->
-	<annotation-driven/>
+	<annotation-driven validator="myValidatorBean"/>
 
 	<resources mapping="/resources/**" location="/resources/"/>
 	<resources mapping="/img/**" location="/img/"/>

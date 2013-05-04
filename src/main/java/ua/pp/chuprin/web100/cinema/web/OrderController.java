@@ -33,7 +33,7 @@ public class OrderController extends CRUDController<Order> {
 	}
 
 	@Override
-	protected Object[] editColumns() {
+	protected Object[] editMetadata() {
 		return new Object[]{
 			service.places(),
 			service.sessions(),
@@ -41,12 +41,12 @@ public class OrderController extends CRUDController<Order> {
 		};
 	}
 
-	protected Object[] listColumns() {
+	protected Object[] listMetadata() {
 		return allColumns();
 	}
 
 	@Override
-	protected Object[] viewColumns() {
+	protected Object[] viewMetadata() {
 		return allColumns();
 	}
 

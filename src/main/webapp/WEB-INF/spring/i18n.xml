@@ -14,6 +14,13 @@
 	            class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="/WEB-INF/i18n/messages"/>
 		<property name="defaultEncoding" value="UTF-8"/>
+		<property name="cacheSeconds" value="0" />
+	</bean>
+
+	<!-- Указан для того чтобы разрешать сообщения вида {xxx} при помощи
+	 стандартного бина, а не ValidationMessages.properties -->
+	<bean id="myValidatorBean" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
+		<property name="validationMessageSource" ref="messageSource"/>
 	</bean>
 
 	<!-- Хранение и извлечение локали из куков пользователя -->

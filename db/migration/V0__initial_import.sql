@@ -1,18 +1,18 @@
 CREATE TABLE "Films" (
     "id" serial PRIMARY KEY,
 
-    "name" varchar NOT NULL,
-    "author" varchar NOT NULL,
-    "genre" varchar NOT NULL,
-    "country" varchar NOT NULL,
-    "year" smallint NOT NULL,
+    "name" varchar(126) NOT NULL,
+    "author" varchar(126) NOT NULL,
+    "genre" varchar(126) NOT NULL,
+    "country" varchar(126) NOT NULL,
+    "year" smallint NOT NULL CHECK("year" > 1800 and "year" < 2200),
     "duration" interval  NOT NULL
 );
 
 CREATE TABLE "Halls" (
     "id" serial PRIMARY KEY,
 
-    "name" varchar  NOT NULL
+    "name" varchar(126)  NOT NULL
 );
 
 CREATE TABLE "Sessions" (
@@ -41,7 +41,7 @@ CREATE TABLE "Sessions" (
 CREATE TABLE "PlaceTypes" (
     "id" serial PRIMARY KEY,
 
-    "name" varchar NOT NULL
+    "name" varchar(126) NOT NULL
 );
 
 CREATE TABLE "Categories" (
@@ -83,7 +83,7 @@ CREATE TABLE "Places" (
 CREATE TABLE "Correlations" (
     "id" serial PRIMARY KEY,
 
-    "name" varchar NOT NULL,
+    "name" varchar(126) NOT NULL,
     "percent" real NOT NULL,
     "expiration" timestamp
 );
@@ -94,9 +94,9 @@ CREATE TABLE "Orders" (
     "seasonID" int NOT NULL,
     "placeID" int NOT NULL,
 
-    "customerName" varchar NOT NULL,
+    "customerName" varchar(126) NOT NULL,
     "price" numeric(12,6) NOT NULL,
-    "comment" varchar,
+    "comment" varchar(126),
 
     CONSTRAINT "Sessions_seasonID"
         FOREIGN KEY("seasonID")

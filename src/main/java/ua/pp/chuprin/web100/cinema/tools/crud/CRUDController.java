@@ -1,13 +1,22 @@
 package ua.pp.chuprin.web100.cinema.tools.crud;
 
+import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import java.beans.PropertyEditorSupport;
+import java.lang.reflect.Field;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
+import org.hibernate.SessionFactory;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 public abstract class CRUDController<T> {
 
@@ -23,9 +33,18 @@ public abstract class CRUDController<T> {
 	public void binder(WebDataBinder binder) {
 		binder.registerCustomEditor(Timestamp.class,
 			new PropertyEditorSupport() {
+				private final SimpleDateFormat FORMAT = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+				@Override
+				public String getAsText() {
+					Timestamp timestamp = (Timestamp) getValue();
+					return FORMAT.format(timestamp);
+				}
+
+				@Override
 				public void setAsText(String value) {
 					try {
-						Date parsedDate = new SimpleDateFormat("dd.MM.yyyy HH:mm").parse(value);
+						Date parsedDate = FORMAT.parse(value);
 						setValue(new Timestamp(parsedDate.getTime()));
 					} catch (ParseException e) {
 						setValue(null);
@@ -38,7 +57,7 @@ public abstract class CRUDController<T> {
 	public String create(Map<String, Object> variables) {
 		variables.put("object", create());
 
-		variables.put("columns", editColumns());
+		variables.put("columns", editMetadata());
 		variables.put("path", path());
 
 		return editPage();
@@ -62,13 +81,47 @@ public abstract class CRUDController<T> {
 	@RequestMapping(value = "/edit/{id}", params = "fragments=body")
 	public String editBody(
 		@PathVariable("id") Integer id, Map<String, Object> variables) {
-		variables.put("object", service().get(id));
-		variables.put("id", id);
 
-		variables.put("columns", editColumns());
+		T object = service().get(id);
+		variables.put("object", object);
+
+		return prepareEdit(object, variables);
+	}
+
+	private String prepareEdit(T object, Map<String, Object> variables) {
+		Class<T> clazz = (Class<T>) object.getClass();
+		List<Column> columns = new ArrayList<Column>();
+		for (Field field : clazz.getDeclaredFields()) {
+			if(field.isAnnotationPresent(CRUD.class)) {
+				CRUD config = field.getAnnotation(CRUD.class);
+				if(config.edit()) {
+					Column column = readColumn(clazz, field, config);
+					columns.add(column);
+				}
+			}
+		}
+		Collections.sort(columns);
+
+		variables.put("columns", columns);
+
 		variables.put("path", path());
 
 		return editPage();
+	}
+
+	private Column readColumn(Class<T> clazz, Field field, CRUD config) {
+		String cssClass = config.cssClass();
+		if(cssClass.equals("")) {
+			cssClass = clazz.getCanonicalName().replace(".", "_") + "-" + field.getName();
+		}
+		int order = config.order();
+
+		if(field.isAnnotationPresent(ManyToOne.class)) {
+			Collection variants = service().findAll(field.getType());
+			return new ManyToOneColumn(field.getName(), cssClass, order, variants);
+		} else {
+			return new Column(field.getName(), cssClass, order);
+		}
 	}
 
 	@RequestMapping("/")
@@ -90,7 +143,7 @@ public abstract class CRUDController<T> {
 		variables.put("pageStart", pageStart);
 		variables.put("pageEnd", pageEnd > count ? count : pageEnd);
 
-		variables.put("columns", listColumns());
+		variables.put("columns", listMetadata());
 		variables.put("path", path());
 		variables.put("sort", sort);
 
@@ -98,10 +151,14 @@ public abstract class CRUDController<T> {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String save(@Valid @ModelAttribute T object) {
-		service().save(object);
+	public String save(@Valid @ModelAttribute("object") T object, BindingResult result, Map<String, Object> variables) {
+		if (result.hasErrors()) {
+			return prepareEdit(object, variables);
+		} else {
+			service().save(object);
 
-		return "redirect:/" + path() + "/list";
+			return "redirect:/" + path() + "/list";
+		}
 	}
 
 	@RequestMapping("/view/{id}")
@@ -117,7 +174,7 @@ public abstract class CRUDController<T> {
 		variables.put("object", service().get(id));
 		variables.put("id", id);
 
-		variables.put("columns", viewColumns());
+		variables.put("columns", viewMetadata());
 		variables.put("path", path());
 
 		return "crud/view";
@@ -125,17 +182,17 @@ public abstract class CRUDController<T> {
 
 	protected abstract T create();
 
-	protected abstract Object[] editColumns();
+	protected abstract Object[] editMetadata();
 
 	protected String editPage() {
 		return "crud/edit";
 	}
 
-	protected abstract Object[] listColumns();
+	protected abstract Object[] listMetadata();
 
 	protected abstract String path();
 
 	protected abstract CRUDService<T> service();
 
-	protected abstract Object[] viewColumns();
+	protected abstract Object[] viewMetadata();
 }

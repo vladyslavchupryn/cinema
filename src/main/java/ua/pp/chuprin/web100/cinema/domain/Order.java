@@ -13,8 +13,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.HashSet;
+
+import org.hibernate.validator.constraints.Length;
 
 @Entity
 @Table(name = "\"Orders\"")
@@ -33,24 +36,31 @@ public class Order {
 	)
 	private Integer id;
 
-	@Column(name = "\"customerName\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"customerName\"", nullable = false, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
+	@NotNull
+	@Length(min = 3, max = 126)
 	private String customerName;
 
-	@Column(name = "\"price\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"price\"", nullable = false, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
+	@NotNull
 	private Double price;
 
-	@Column(name = "\"comment\"", nullable = true, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"comment\"", nullable = true, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
+	@NotNull
+	@Length(min = 3, max = 126)
 	private String comment;
 
-	@ManyToOne( fetch = FetchType.LAZY )
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "\"placeID\"", referencedColumnName = "id", nullable = false)
+	@NotNull
 	private Place place;
 
-	@ManyToOne( fetch = FetchType.LAZY )
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "\"seasonID\"", referencedColumnName = "id", nullable = false)
+	@NotNull
 	private Session session;
 
 	@ManyToMany
@@ -69,6 +79,32 @@ public class Order {
 		this.comment = comment;
 	}
 
+	public Collection<Integer> getCorrelationIds() {
+		Collection<Integer> result = new HashSet<Integer>();
+		for (Correlation cur : this.correlations) {
+			result.add(cur.getId());
+		}
+
+		return result;
+	}
+
+	public void setCorrelationIds(Collection<Integer> correlations) {
+		this.correlations = new HashSet<Correlation>();
+		for (Integer currentId : correlations) {
+			Correlation currentCorrelation = new Correlation();
+			currentCorrelation.setId(currentId);
+			this.correlations.add(currentCorrelation);
+		}
+	}
+
+	public Collection<Correlation> getCorrelations() {
+		return correlations;
+	}
+
+	public void setCorrelations(Collection<Correlation> correlations) {
+		this.correlations = correlations;
+	}
+
 	public String getCustomerName() {
 		return customerName;
 	}
@@ -83,32 +119,6 @@ public class Order {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Collection<Integer> getCorrelationIds() {
-		Collection<Integer> result = new HashSet<Integer>();
-		for(Correlation cur : this.correlations) {
-			result.add(cur.getId());
-		}
-
-		return result;
-	}
-
-	public void setCorrelationIds(Collection<Integer> correlations) {
-		this.correlations = new HashSet<Correlation>();
-		for(Integer currentId : correlations) {
-			Correlation currentCorrelation = new Correlation();
-			currentCorrelation.setId(currentId);
-			this.correlations.add(currentCorrelation);
-		}
-	}
-
-	public void setCorrelations(Collection<Correlation> correlations) {
-		this.correlations = correlations;
-	}
-
-	public Collection<Correlation> getCorrelations() {
-		return correlations;
 	}
 
 	public Place getPlace() {

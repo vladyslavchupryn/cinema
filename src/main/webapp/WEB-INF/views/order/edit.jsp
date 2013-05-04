@@ -10,6 +10,6 @@
 </h2>
 <br/>
 
-<div class="span7 well well-large" >
+<div class="well well-large" >
 	<tiles:insertAttribute name="editBody"/>
 </div>

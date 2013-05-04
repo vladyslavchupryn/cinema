@@ -9,11 +9,16 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 import org.hibernate.annotations.Type;
 import org.hibernate.annotations.TypeDef;
+import org.hibernate.validator.constraints.Length;
 import ua.pp.chuprin.web100.cinema.tools.Interval;
+import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 @Entity
 @Table(name = "`Films`")
@@ -32,32 +37,49 @@ public class Film {
 	)
 	private Integer id;
 
-	@Column(name = "\"name\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"name\"", nullable = false, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
+	@NotNull
+	@Length(min = 3, max = 126)
+	@CRUD
 	private String name;
 
-	@Column(name = "\"author\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"author\"", nullable = false, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
+	@NotNull
+	@Length(min = 3, max = 126)
+	@CRUD
 	private String author;
 
-	@Column(name = "\"genre\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"genre\"", nullable = false, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
+	@NotNull
+	@Length(min = 3, max = 126)
+	@CRUD
 	private String genre;
 
-	@Column(name = "\"country\"", nullable = false, insertable = true, updatable = true, length = 2147483647, precision = 0)
+	@Column(name = "\"country\"", nullable = false, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
+	@NotNull
+	@Length(min = 3, max = 126)
+	@CRUD
 	private String country;
 
 	@Column(name = "\"year\"", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@NotNull
 	@Basic
+	@Min(1800) @Max(2200)
+	@CRUD
 	private Integer year;
 
 	@Column(name = "\"duration\"", nullable = false, insertable = true, updatable = true, length = 49, precision = 6)
+	@NotNull
 	@Type(type = "interval")
+	@CRUD
 	private Integer duration;
 
 	@OneToMany(mappedBy = "film")
-	private Collection<Session> sessionsesById;
+	private Collection<Session> sessions;
 
 	public String getAuthor() {
 		return author;
@@ -107,12 +129,12 @@ public class Film {
 		this.name = name;
 	}
 
-	public Collection<Session> getSessionsesById() {
-		return sessionsesById;
+	public Collection<Session> getSessions() {
+		return sessions;
 	}
 
-	public void setSessionsesById(Collection<Session> sessionsesById) {
-		this.sessionsesById = sessionsesById;
+	public void setSessions(Collection<Session> sessionsesById) {
+		this.sessions = sessionsesById;
 	}
 
 	public Integer getYear() {

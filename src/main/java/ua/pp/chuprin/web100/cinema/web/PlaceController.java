@@ -20,7 +20,7 @@ public class PlaceController extends CRUDController<Place> {
 	}
 
 	@Override
-	protected Object[] editColumns() {
+	protected Object[] editMetadata() {
 		return new Object[]{
 			"number",
 			new Object[]{
@@ -31,12 +31,12 @@ public class PlaceController extends CRUDController<Place> {
 		};
 	}
 
-	protected Object[] listColumns() {
+	protected Object[] listMetadata() {
 		return allColumns();
 	}
 
 	@Override
-	protected Object[] viewColumns() {
+	protected Object[] viewMetadata() {
 		return allColumns();
 	}
 
