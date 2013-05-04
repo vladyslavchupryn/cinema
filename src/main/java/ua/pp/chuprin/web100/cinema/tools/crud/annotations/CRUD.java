@@ -13,7 +13,7 @@ public @interface CRUD
 	boolean edit() default true;
 	boolean view() default true;
 
-	int order() default 0;
+	short order() default 0;
 	String cssClass() default "";
 	String template() default "";
 }

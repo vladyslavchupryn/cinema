@@ -1,7 +1,5 @@
 package ua.pp.chuprin.web100.cinema.service.impl;
 
-import java.util.Collection;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.pp.chuprin.web100.cinema.dao.PlaceTypeDAO;

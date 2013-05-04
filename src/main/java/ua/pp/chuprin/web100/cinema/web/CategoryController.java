@@ -15,47 +15,13 @@ public class CategoryController extends CRUDController<Category> {
 	@Autowired
 	private CategoryService service;
 
-	protected Category create() {
-		return new Category();
-	}
-
 	@Override
-	protected Object[] editMetadata() {
-		return new Object[]{
-			"price",
-			new Object[]{
-				"hall.id",
-				service.halls(),
-				"hall"
-			},
-			new Object[]{
-				"placeType.id",
-				service.types(),
-				"placeType"
-			},
-		};
-	}
-
-	protected Object[] listMetadata() {
-		return allColumns();
-	}
-
-	@Override
-	protected Object[] viewMetadata() {
-		return allColumns();
-	}
-
-	@Override
-	protected String path() {
-		return "category";
+	protected Class<Category> domain() {
+		return Category.class;
 	}
 
 	@Override
 	protected CRUDService<Category> service() {
 		return service;
-	}
-
-	private Object[] allColumns() {
-		return new String[]{"hall", "placeType", "price"};
 	}
 }

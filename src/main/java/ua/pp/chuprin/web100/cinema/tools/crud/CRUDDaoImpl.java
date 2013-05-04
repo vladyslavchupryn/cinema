@@ -9,10 +9,19 @@ import ua.pp.chuprin.web100.cinema.domain.Category;
 import ua.pp.chuprin.web100.cinema.domain.Film;
 import ua.pp.chuprin.web100.cinema.tools.SorterBuilder;
 
-public abstract class CRUDDaoImpl<T> implements CRUDDao<T> {
+public class CRUDDaoImpl<T> implements CRUDDao<T> {
 
 	@Autowired
 	private SessionFactory factory;
+
+	private Class<T> domain = null;
+
+	protected CRUDDaoImpl() {
+	}
+
+	/* package */ CRUDDaoImpl(Class<T> domain) {
+		this.domain = domain;
+	}
 
 	@Override
 	public Long count() {
@@ -53,7 +62,13 @@ public abstract class CRUDDaoImpl<T> implements CRUDDao<T> {
 		getSession().saveOrUpdate(film);
 	}
 
-	protected abstract Class<T> domain();
+	public Class<T> domain() {
+		if(domain == null) {
+			throw new IllegalStateException("Class can used if domain was provided");
+		} else {
+			return domain;
+		}
+	}
 
 	protected Session getSession() {
 		return factory.getCurrentSession();

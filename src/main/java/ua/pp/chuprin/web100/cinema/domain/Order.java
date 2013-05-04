@@ -18,6 +18,7 @@ import java.util.Collection;
 import java.util.HashSet;
 
 import org.hibernate.validator.constraints.Length;
+import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 @Entity
 @Table(name = "\"Orders\"")
@@ -40,27 +41,32 @@ public class Order {
 	@Basic
 	@NotNull
 	@Length(min = 3, max = 126)
+	@CRUD(order = 100)
 	private String customerName;
 
 	@Column(name = "\"price\"", nullable = false, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
 	@NotNull
+	@CRUD(order = 200)
 	private Double price;
 
 	@Column(name = "\"comment\"", nullable = true, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
 	@NotNull
 	@Length(min = 3, max = 126)
+	@CRUD(order = 300)
 	private String comment;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "\"placeID\"", referencedColumnName = "id", nullable = false)
 	@NotNull
+	@CRUD(order = 400)
 	private Place place;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "\"seasonID\"", referencedColumnName = "id", nullable = false)
 	@NotNull
+	@CRUD(order = 500)
 	private Session session;
 
 	@ManyToMany

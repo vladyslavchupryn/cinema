@@ -11,11 +11,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
-import org.hibernate.SessionFactory;
+import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
@@ -55,12 +54,10 @@ public abstract class CRUDController<T> {
 
 	@RequestMapping(value = "/create")
 	public String create(Map<String, Object> variables) {
-		variables.put("object", create());
+		T object = create();
+		variables.put("object", object);
 
-		variables.put("columns", editMetadata());
-		variables.put("path", path());
-
-		return editPage();
+		return prepareEdit(object, variables);
 	}
 
 	@RequestMapping(value = "/delete/{id}", method = RequestMethod.POST)
@@ -89,19 +86,7 @@ public abstract class CRUDController<T> {
 	}
 
 	private String prepareEdit(T object, Map<String, Object> variables) {
-		Class<T> clazz = (Class<T>) object.getClass();
-		List<Column> columns = new ArrayList<Column>();
-		for (Field field : clazz.getDeclaredFields()) {
-			if(field.isAnnotationPresent(CRUD.class)) {
-				CRUD config = field.getAnnotation(CRUD.class);
-				if(config.edit()) {
-					Column column = readColumn(clazz, field, config);
-					columns.add(column);
-				}
-			}
-		}
-		Collections.sort(columns);
-
+		List<Column> columns = getColumns(object, Operation.EDIT);
 		variables.put("columns", columns);
 
 		variables.put("path", path());
@@ -109,16 +94,34 @@ public abstract class CRUDController<T> {
 		return editPage();
 	}
 
-	private Column readColumn(Class<T> clazz, Field field, CRUD config) {
-		String cssClass = config.cssClass();
-		if(cssClass.equals("")) {
-			cssClass = clazz.getCanonicalName().replace(".", "_") + "-" + field.getName();
-		}
-		int order = config.order();
+	private Column readEditColumn(Class<T> clazz, Field field, CRUD config) {
+		String cssClass = getCssClass(clazz, field, config);
+		short order = config.order();
 
 		if(field.isAnnotationPresent(ManyToOne.class)) {
 			Collection variants = service().findAll(field.getType());
 			return new ManyToOneColumn(field.getName(), cssClass, order, variants);
+		} else {
+			return new Column(field.getName(), cssClass, order);
+		}
+	}
+
+	private String getCssClass(Class<T> clazz, Field field, CRUD config) {
+		String cssClass = config.cssClass();
+		if(cssClass.equals("")) {
+			cssClass = clazz.getCanonicalName().replace(".", "_") + "-" + field.getName();
+		}
+		return cssClass;
+	}
+
+	private Column readViewColumn(Class<T> clazz, Field field, CRUD config) {
+		String cssClass = getCssClass(clazz, field, config);
+
+		short order = config.order();
+
+		if(field.isAnnotationPresent(ManyToOne.class)) {
+			Collection variants = service().findAll(field.getType());
+			return new ManyToOneColumn(field.getName(), cssClass, order, null);
 		} else {
 			return new Column(field.getName(), cssClass, order);
 		}
@@ -143,12 +146,14 @@ public abstract class CRUDController<T> {
 		variables.put("pageStart", pageStart);
 		variables.put("pageEnd", pageEnd > count ? count : pageEnd);
 
-		variables.put("columns", listMetadata());
+		variables.put("columns", getColumns(domain(),Operation.LIST));
 		variables.put("path", path());
 		variables.put("sort", sort);
 
 		return "crud/list";
 	}
+
+	protected abstract Class<T> domain();
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
 	public String save(@Valid @ModelAttribute("object") T object, BindingResult result, Map<String, Object> variables) {
@@ -171,28 +176,94 @@ public abstract class CRUDController<T> {
 	@RequestMapping(value = "/view/{id}", params = "fragments=body")
 	public String viewBody(
 		@PathVariable("id") int id, Map<String, Object> variables) {
-		variables.put("object", service().get(id));
-		variables.put("id", id);
 
-		variables.put("columns", viewMetadata());
+		T object = service().get(id);
+		variables.put("object", object);
+
+		List<Column> columns = getColumns(object, Operation.VIEW);
+
+		variables.put("columns", columns);
 		variables.put("path", path());
 
 		return "crud/view";
 	}
 
-	protected abstract T create();
+	private static enum Operation {
+		EDIT,
+		VIEW,
+		LIST
+	}
 
-	protected abstract Object[] editMetadata();
+	private List<Column> getColumns(T object, Operation operation) {
+		return getColumns((Class<T>) object.getClass(),operation);
+	}
+
+	private List<Column> getColumns(Class<T> clazz, Operation operation) {
+		List<Column> columns = new ArrayList<Column>();
+		for (Field field : clazz.getDeclaredFields()) {
+			if(field.isAnnotationPresent(CRUD.class)) {
+				CRUD config = field.getAnnotation(CRUD.class);
+
+				Column column = null;
+				switch (operation) {
+					case VIEW:
+						if(config.view()) {
+							column = readViewColumn(clazz, field, config);
+						}
+						break;
+					case EDIT:
+						if(config.edit()) {
+							column = readEditColumn(clazz, field, config);
+						}
+						break;
+					case LIST:
+						if(config.list()) {
+							column = readListColumn(clazz, field, config);
+						}
+						break;
+				}
+
+				if(column != null) {
+					columns.add(column);
+				}
+			}
+		}
+		Collections.sort(columns);
+		return columns;
+	}
+
+	private Column readListColumn(Class<T> clazz, Field field, CRUD config) {
+		String cssClass = getCssClass(clazz, field, config);
+
+		short order = config.order();
+
+		if(field.isAnnotationPresent(ManyToOne.class)) {
+			return new ManyToOneColumn(field.getName(), cssClass, order, null);
+		} else {
+			return new Column(field.getName(), cssClass, order);
+		}
+	}
+
+	protected T create() {
+		try {
+			return  (T) domain().newInstance();
+		} catch (InstantiationException e) {
+			throw new IllegalStateException(e);
+		} catch (IllegalAccessException e) {
+			throw new IllegalStateException(e);
+		}
+	}
 
 	protected String editPage() {
 		return "crud/edit";
 	}
 
-	protected abstract Object[] listMetadata();
+	protected String path() {
+		String className = domain().getSimpleName();
+		return StringUtils.uncapitalize(className);
+	}
 
-	protected abstract String path();
-
-	protected abstract CRUDService<T> service();
-
-	protected abstract Object[] viewMetadata();
+	protected CRUDService<T> service() {
+		return new CRUDServiceImpl<T>(domain());
+	}
 }

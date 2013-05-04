@@ -15,36 +15,13 @@ public class CorrelationController extends CRUDController<Correlation> {
 	@Autowired
 	private CorrelationService service;
 
-	protected Correlation create() {
-		return new Correlation();
-	}
-
 	@Override
-	protected Object[] editMetadata() {
-		return allColumns();
-	}
-
-	protected Object[] listMetadata() {
-		return allColumns();
-	}
-
-	@Override
-	protected Object[] viewMetadata() {
-		return allColumns();
-	}
-
-	@Override
-	protected String path() {
-		return "correlation";
+	protected Class<Correlation> domain() {
+		return Correlation.class;
 	}
 
 	@Override
 	protected CRUDService<Correlation> service() {
 		return service;
 	}
-
-	private Object[] allColumns() {
-		return new String[]{"name", "percent", "expiration"};
-	}
-
 }

@@ -9,6 +9,7 @@ import javax.persistence.ManyToOne;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ua.pp.chuprin.web100.cinema.domain.Correlation;
 import ua.pp.chuprin.web100.cinema.domain.Order;
 import ua.pp.chuprin.web100.cinema.domain.Place;
 import ua.pp.chuprin.web100.cinema.domain.Session;
@@ -28,39 +29,22 @@ public class OrderController extends CRUDController<Order> {
 		return "order/edit";
 	}
 
-	protected Order create() {
-		return new Order();
-	}
-
-	@Override
-	protected Object[] editMetadata() {
-		return new Object[]{
-			service.places(),
-			service.sessions(),
-			service.correlations()
-		};
-	}
-
-	protected Object[] listMetadata() {
-		return allColumns();
-	}
-
-	@Override
-	protected Object[] viewMetadata() {
-		return allColumns();
-	}
-
-	@Override
-	protected String path() {
-		return "order";
-	}
+//	@Override
+//	protected Object[] editMetadata() {
+//		return new Object[]{
+//			service.places(),
+//			service.sessions(),
+//			service.correlations()
+//		};
+//	}
 
 	@Override
 	protected CRUDService<Order> service() {
 		return service;
 	}
 
-	private Object[] allColumns() {
-		return new String[]{"customerName", "price", "place", "session", "comment"};
+	@Override
+	protected Class<Order> domain() {
+		return Order.class;
 	}
 }

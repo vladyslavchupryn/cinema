@@ -23,48 +23,15 @@ public class SessionController extends CRUDController<Session> {
 	@Autowired
 	private SessionService service;
 
-	protected Session create() {
-		return new Session();
-	}
-
-	@Override
-	protected Object[] editMetadata() {
-		return new Object[]{
-			"start",
-			new Object[]{
-				"film.id",
-				service.films(),
-				"film"
-			},
-			new Object[]{
-				"hall.id",
-				service.halls(),
-				"hall"
-			},
-			"percent"
-		};
-	}
-
-	protected Object[] listMetadata() {
-		return allColumns();
-	}
-
-	@Override
-	protected String path() {
-		return "session";
-	}
-
 	@Override
 	protected CRUDService<Session> service() {
 		return service;
 	}
 
 	@Override
-	protected Object[] viewMetadata() {
-		return allColumns();
+	protected Class<Session> domain() {
+		return Session.class;
 	}
 
-	private Object[] allColumns() {
-		return new String[]{"start", "film", "hall", "percent"};
-	}
 }
+

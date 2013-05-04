@@ -56,14 +56,26 @@
 	<th>#</th>
 	<c:forEach var="current" items="${columns}">
 		<th class="uppercase">
-			<spring:message code="${path}.column.${current}"/>
+			<c:choose>
+				<c:when test="${current.type == 'simple'}">
+					<spring:message code="${path}.column.${current.name}"/>
+				</c:when>
+				<c:when test="${current.type == 'many-to-one'}">
+					<a href="${base}${current.name}/list">
+						<spring:message code="${path}.column.${current.name}"/>
+					</a>
+				</c:when>
+				<c:otherwise>
+					Internal error
+				</c:otherwise>
+			</c:choose>
 				<a rel="tooltip" data-placement="bottom" title="<spring:message code="crud.list.descending"/>"
 				   class="link-button icon-large icon-arrow-down pull-right"
-				   href="${crud}list?sort=${current}-desc">
+				   href="${crud}list?sort=${current.name}-desc">
 				</a>
 				<a rel="tooltip" data-placement="bottom" title="<spring:message code="crud.list.ascending"/>"
 				   class="link-button icon-large icon-arrow-up pull-right"
-				   href="${crud}list?sort=${current}-asc">
+				   href="${crud}list?sort=${current.name}-asc">
 				</a>
 		</th>
 	</c:forEach>
@@ -77,7 +89,21 @@
 				<tr>
 					<td><%=number++%></td>
 					<c:forEach var="currentColumn" items="${columns}">
-						<td><c:out value="${current[currentColumn]}"/></td>
+						<td>
+							<c:choose>
+								<c:when test="${currentColumn.type == 'simple'}">
+									<c:out value="${current[currentColumn.name]}"/>
+								</c:when>
+								<c:when test="${currentColumn.type == 'many-to-one'}">
+									<a href="${base}${currentColumn.name}/view/${current[currentColumn.name].id}">
+										<c:out value="${current[currentColumn.name]}"/>
+									</a>
+								</c:when>
+								<c:otherwise>
+									Internal error
+								</c:otherwise>
+							</c:choose>
+						</td>
 					</c:forEach>
 					<td>
 						<a rel="tooltip" data-placement="bottom" title="<spring:message code="crud.list.view"/>" href="${crud}view/${current.id}" class="link-button list-icon icon-eye-open"></a>

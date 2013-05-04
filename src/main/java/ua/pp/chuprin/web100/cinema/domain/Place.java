@@ -17,6 +17,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
+import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
+
 @Entity
 @Table(name = "\"Places\"")
 public class Place {
@@ -37,6 +39,7 @@ public class Place {
 	@Basic
 	@NotNull
 	@Min(0)
+	@CRUD(order = 100)
 	private Short number;
 
 	@OneToMany(mappedBy = "place")
@@ -45,7 +48,7 @@ public class Place {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "\"categoryID\"", referencedColumnName = "id", nullable = false)
 	@NotNull
-
+	@CRUD(order = 200)
 	private Category category;
 
 	public void setCategory(Category category) {

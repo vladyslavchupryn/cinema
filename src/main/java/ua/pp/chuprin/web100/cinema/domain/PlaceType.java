@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Collection;
 
 import org.hibernate.validator.constraints.Length;
+import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 @Entity
 @Table(name = "\"PlaceTypes\"")
@@ -35,6 +36,7 @@ public class PlaceType {
 	@Basic
 	@NotNull
 	@Length(min = 3, max = 126)
+	@CRUD(order = 100)
 	private String name;
 
 	@OneToMany(mappedBy = "placeType")

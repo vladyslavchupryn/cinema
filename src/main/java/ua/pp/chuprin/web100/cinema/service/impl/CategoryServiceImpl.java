@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.pp.chuprin.web100.cinema.dao.CategoryDAO;
-import ua.pp.chuprin.web100.cinema.dao.PlaceTypeDAO;
 import ua.pp.chuprin.web100.cinema.domain.Category;
 import ua.pp.chuprin.web100.cinema.service.CategoryService;
 import ua.pp.chuprin.web100.cinema.tools.crud.CRUDDao;

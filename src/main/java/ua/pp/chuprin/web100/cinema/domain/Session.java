@@ -12,10 +12,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.util.Collection;
+
+import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 @Entity
 @Table(name = "\"Sessions\"")
@@ -36,6 +37,7 @@ public class Session {
 	@Column(name = "\"start\"", nullable = false, insertable = true, updatable = true, length = 29, precision = 6)
 	@Basic
 	@NotNull
+	@CRUD(order = 100)
 	private Timestamp start;
 
 	@Column(
@@ -48,23 +50,24 @@ public class Session {
 		precision = 8
 	)
 	@Basic
+	@CRUD(order = 200)
 	private Float percent;
 
 	@OneToMany(mappedBy = "session")
-	private Collection<Order> ordersesById;
+	private Collection<Order> orders;
 
 	@ManyToOne(
 		fetch = FetchType.LAZY
 	)
 	@JoinColumn(name = "\"filmID\"", referencedColumnName = "id", nullable = false)
-
+	@CRUD(order = 300)
 	private Film film;
 
 	@ManyToOne(
 		fetch = FetchType.LAZY
 	)
 	@JoinColumn(name = "\"hallID\"", referencedColumnName = "id", nullable = false)
-
+	@CRUD(order = 400)
 	private Hall hall;
 
 	public Film getFilm() {
@@ -91,12 +94,12 @@ public class Session {
 		this.id = id;
 	}
 
-	public Collection<Order> getOrdersesById() {
-		return ordersesById;
+	public Collection<Order> getOrders() {
+		return orders;
 	}
 
-	public void setOrdersesById(Collection<Order> ordersesById) {
-		this.ordersesById = ordersesById;
+	public void setOrders(Collection<Order> ordersesById) {
+		this.orders = ordersesById;
 	}
 
 	public Float getPercent() {

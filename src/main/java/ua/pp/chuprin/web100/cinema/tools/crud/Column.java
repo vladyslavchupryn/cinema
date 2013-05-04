@@ -4,11 +4,11 @@ public class Column implements Comparable<Column> {
 
 	private final String name;
 	private final String cssClass;
-	private final int order;
+	private final short order;
 
 	private String template;
 
-	public Column(String name, String cssClass, int order) {
+	public Column(String name, String cssClass, short order) {
 		this.name = name;
 		this.cssClass = cssClass;
 		this.order = order;
@@ -27,7 +27,7 @@ public class Column implements Comparable<Column> {
 		return cssClass;
 	}
 
-	public int getOrder() {
-		return order;
+	public String getType() {
+		return "simple";
 	}
 }

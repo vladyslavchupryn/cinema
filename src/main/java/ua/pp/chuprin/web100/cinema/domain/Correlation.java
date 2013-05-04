@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 import java.util.Collection;
 
 import org.hibernate.validator.constraints.Length;
+import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 @Entity
 @Table(name = "\"Correlations\"")
@@ -50,6 +51,7 @@ public class Correlation {
 	@Basic
 	@NotNull
 	@Length(min = 3, max = 126)
+	@CRUD(order = 100)
 	private String name;
 
 	@Column(
@@ -62,6 +64,7 @@ public class Correlation {
 	)
 	@Basic
 	@NotNull
+	@CRUD(order = 200)
 	private Float percent;
 
 	@Column(
@@ -73,6 +76,7 @@ public class Correlation {
 		precision = 6
 	)
 	@Basic
+	@CRUD(order = 300)
 	private Timestamp expiration;
 
 	@ManyToMany(mappedBy = "correlations")

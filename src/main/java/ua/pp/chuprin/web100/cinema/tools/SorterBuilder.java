@@ -1,16 +1,15 @@
 package ua.pp.chuprin.web100.cinema.tools;
 
+import java.lang.reflect.Field;
+
 import org.hibernate.SessionFactory;
 import org.hibernate.metadata.ClassMetadata;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
-public class SorterBuilder {
+public class SorterBuilder<T> {
 	private static final String DEFAULT_SORT = "asc";
-
-	@Autowired
-	private SessionFactory factory;
 
 	public static class Sorter {
 
@@ -28,17 +27,15 @@ public class SorterBuilder {
 		}
 	}
 
-	public Sorter build(String sort, Class entity) {
-		ClassMetadata meta = factory.getClassMetadata(entity);
-
-		String column = meta.getIdentifierPropertyName();
+	public static Sorter build(String sort, Class entity) {
+		String column = "id";
 		String oder = DEFAULT_SORT;
 
 		String[] sortSettings = sort.split("-");
 		if (sortSettings.length == 2) {
-			for (String property : meta.getPropertyNames()) {
-				if (sortSettings[0].equals(property)) {
-					column = property;
+			for (Field field : entity.getFields()) {
+				if (sortSettings[0].equals(field.getName())) {
+					column = field.getName();
 					break;
 				}
 			}

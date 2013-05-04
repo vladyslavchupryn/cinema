@@ -41,41 +41,41 @@ public class Film {
 	@Basic
 	@NotNull
 	@Length(min = 3, max = 126)
-	@CRUD
+	@CRUD(order = 0)
 	private String name;
 
 	@Column(name = "\"author\"", nullable = false, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
 	@NotNull
 	@Length(min = 3, max = 126)
-	@CRUD
+	@CRUD(order = 1)
 	private String author;
 
 	@Column(name = "\"genre\"", nullable = false, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
 	@NotNull
 	@Length(min = 3, max = 126)
-	@CRUD
+	@CRUD(order = 2)
 	private String genre;
 
 	@Column(name = "\"country\"", nullable = false, insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
 	@NotNull
 	@Length(min = 3, max = 126)
-	@CRUD
+	@CRUD(order = 3)
 	private String country;
 
 	@Column(name = "\"year\"", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@NotNull
 	@Basic
 	@Min(1800) @Max(2200)
-	@CRUD
+	@CRUD(order = 4)
 	private Integer year;
 
 	@Column(name = "\"duration\"", nullable = false, insertable = true, updatable = true, length = 49, precision = 6)
 	@NotNull
 	@Type(type = "interval")
-	@CRUD
+	@CRUD(order = 5)
 	private Integer duration;
 
 	@OneToMany(mappedBy = "film")

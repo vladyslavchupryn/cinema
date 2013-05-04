@@ -15,24 +15,6 @@ public class PlaceTypeController extends CRUDController<PlaceType> {
 	@Autowired
 	private PlaceTypeService service;
 
-	protected PlaceType create() {
-		return new PlaceType();
-	}
-
-	@Override
-	protected Object[] editMetadata() {
-		return allColumns();
-	}
-
-	protected Object[] listMetadata() {
-		return allColumns();
-	}
-
-	@Override
-	protected Object[] viewMetadata() {
-		return allColumns();
-	}
-
 	@Override
 	protected String path() {
 		return "placeType";
@@ -43,7 +25,9 @@ public class PlaceTypeController extends CRUDController<PlaceType> {
 		return service;
 	}
 
-	private Object[] allColumns() {
-		return new String[]{"name"};
+	@Override
+	protected Class<PlaceType> domain() {
+		return PlaceType.class;
 	}
+
 }

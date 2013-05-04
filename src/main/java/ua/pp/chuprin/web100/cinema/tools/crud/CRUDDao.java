@@ -9,6 +9,8 @@ public interface CRUDDao<T> {
 
 	void delete(int id);
 
+	Class<T> domain();
+
 	<A> Collection<A> findAll(Class<A> type);
 
 	T get(int id);

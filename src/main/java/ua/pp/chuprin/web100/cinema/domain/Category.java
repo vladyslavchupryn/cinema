@@ -51,7 +51,7 @@ public class Category {
 	)
 	@Basic
 	@NotNull
-	@CRUD
+	@CRUD(order = 10)
 	private Double price;
 
 	@ManyToOne(
@@ -65,7 +65,7 @@ public class Category {
 		insertable = true
 	)
 	@NotNull
-	@CRUD
+	@CRUD(order = 5)
 	private Hall hall;
 
 	@ManyToOne(
@@ -79,7 +79,7 @@ public class Category {
 		insertable = true
 	)
 	@NotNull
-	@CRUD
+	@CRUD(order = 1)
 	private PlaceType placeType;
 
 	@OneToMany(mappedBy = "category")

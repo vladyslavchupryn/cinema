@@ -11,38 +11,26 @@
 
 	<c:forEach var="current" items="${columns}">
 		<div class="control-group">
-			<c:choose>
-				<c:when test="${current.getClass().name == 'java.lang.String'}">
-					<label class="control-label"><spring:message
-							code="${path}.column.${current}"/>:</label>
-
-					<div class="controls">
-						<form:input path="${current}" java-type="${object[current].getClass().name}"/>
-						<form:errors path="${current}" cssClass="field-error help-inline"/>
-					</div>
-				</c:when>
-				<c:otherwise>
-					<label class="control-label"><spring:message
-							code="${path}.column.${current.name}"/>:</label>
-
-					<div class="controls">
-						<form:input path="${current.name}" java-type="${object[current].getClass().name}" cssClass="${current.cssClass}"/>
-						<form:errors path="${current}" cssClass="field-error help-inline"/>
-					</div>
-
-					<%--<label class="control-label"><spring:message--%>
-							<%--code="${path}.column.${current[2]}"/>:</label>--%>
-
-					<%--<div class="controls">--%>
-
-						<%--<form:select path="${current[0]}"--%>
-						             <%--data-placeholder="Select ..."--%>
-						             <%--cssClass="chzn-select">--%>
-							<%--<form:options items="${current[1]}" itemValue="id"/>--%>
-						<%--</form:select>--%>
-					<%--</div>--%>
-				</c:otherwise>
+			<label class="control-label"><spring:message
+					code="${path}.column.${current.name}"/>:</label>
+			<div class="controls">
+				<c:choose>
+					<c:when test="${current.type == 'simple'}">
+						<form:input path="${current.name}" java-type="${object[current.name].getClass().name}" cssClass="${current.cssClass}"/>
+						<form:errors path="${current.name}" cssClass="field-error help-inline"/>
+					</c:when>
+					<c:when test="${current.type == 'many-to-one'}">
+						<form:select path="${current.name}"
+						             data-placeholder="Select ..."
+						             cssClass="chzn-select">
+							<form:options items="${current.variants}" itemValue="id"/>
+						</form:select>
+					</c:when>
+					<c:otherwise>
+						Internal error
+					</c:otherwise>
 			</c:choose>
+			</div>
 
 		</div>
 	</c:forEach>
