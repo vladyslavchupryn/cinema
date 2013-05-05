@@ -2,16 +2,20 @@ package ua.pp.chuprin.web100.cinema.dao;
 
 import java.util.Collection;
 
+import org.hibernate.SessionFactory;
+import org.springframework.stereotype.Repository;
 import ua.pp.chuprin.web100.cinema.domain.Correlation;
 import ua.pp.chuprin.web100.cinema.domain.Order;
-import ua.pp.chuprin.web100.cinema.domain.Place;
-import ua.pp.chuprin.web100.cinema.domain.Session;
 import ua.pp.chuprin.web100.cinema.tools.crud.CRUDDao;
 
-public interface OrderDAO extends CRUDDao<Order> {
-	Collection<Correlation> correlations();
+@Repository
+public class OrderDAO extends CRUDDao<Order> {
 
-	Collection<Place> places();
+	public OrderDAO(SessionFactory factory) {
+		super(Order.class, factory);
+	}
 
-	Collection<Session> sessions();
+	public Collection<Correlation> correlations() {
+		return getSession().createQuery("from Correlation where expiration > now() or expiration is null").list();
+	}
 }

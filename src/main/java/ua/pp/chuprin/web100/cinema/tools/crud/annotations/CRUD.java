@@ -18,7 +18,5 @@ public @interface CRUD {
 
 	short order() default 0;
 
-	String template() default "";
-
 	boolean view() default true;
 }

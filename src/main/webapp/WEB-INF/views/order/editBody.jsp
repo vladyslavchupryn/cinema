@@ -8,67 +8,6 @@
 <spring:url var="base" value="/"/>
 <c:set var="crud" scope="request" value="${base}${path}/"/>
 
-<script type="text/javascript">
-	var orderParameters = {};
-
-	orderParameters['place'] = {};
-	<c:forEach var="place" items="${columns[0]}">
-		orderParameters['place'][${place.id}] = ${place.category.price};
-	</c:forEach>
-
-	orderParameters['session'] = {};
-	<c:forEach var="session" items="${columns[1]}">
-		orderParameters['session'][${session.id}] = ${session.percent};
-	</c:forEach>
-
-	orderParameters['correlation'] = {};
-	<c:forEach var="correlation" items="${columns[2]}">
-		orderParameters['correlation'][${correlation.id}] = ${correlation.percent};
-	</c:forEach>
-</script>
-
-<script type="text/javascript">
-	function orderUpdatePrice() {
-		if(!$('#update-price').prop("checked")) {
-			return;
-		}
-
-		var placeId = $('.place-id option:selected').val();
-		var sessionId = $('.session-id option:selected').val();
-		var correlations = new Array();
-		var index=0;
-		$('.many-to-many input:checkbox:checked').each(function(){
-			correlations[index] = $(this).attr('value');
-			index++;
-		});
-
-		var placePrice = orderParameters['place'][placeId];
-		var sessionPercent = orderParameters['session'][sessionId];
-		var correlationPercent = 0;
-		for(var correlationId in correlations) {
-			correlationPercent += orderParameters['correlation'][correlations[correlationId]];
-		}
-
-		var percentDiff = sessionPercent + correlationPercent;
-		var moneyDiff = placePrice * (percentDiff / 100.0);
-
-		var finalPrice = placePrice + moneyDiff;
-		if(finalPrice < 0) {
-			finalPrice = 0.00;
-		}
-
-		$('#price').val(finalPrice);
-	}
-
-	$(function(){
-		$('.many-to-many input:checkbox').click(orderUpdatePrice);
-		$('.place-id').change(orderUpdatePrice);
-		$('.session-id').change(orderUpdatePrice);
-
-		$('#update-price').change(orderUpdatePrice);
-	});
-</script>
-
 <form:form method="post" action="${crud}save" id="crud-form"
            commandName="object" class="form-horizontal">
 	<form:hidden path="id"/>

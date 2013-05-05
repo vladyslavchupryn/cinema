@@ -27,7 +27,7 @@
 					<c:when test="${current.type == 'many-to-one'}">
 						<form:select path="${current.name}.id"
 						             data-placeholder="Select ..."
-						             cssClass="chzn-select">
+						             cssClass="chzn-select ${current.cssClass}">
 							<form:options items="${current.variants}" itemValue="id"/>
 						</form:select>
 					</c:when>

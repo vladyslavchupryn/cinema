@@ -6,16 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 import ua.pp.chuprin.web100.cinema.tools.SorterBuilder;
 
-public class CRUDServiceImpl<T> implements CRUDService<T> {
-
-	private CRUDDao<T> dao = null;
-
-	protected CRUDServiceImpl() {
-	}
-
-	/* package */ CRUDServiceImpl(Class<T> type, SessionFactory factory) {
-		this.dao = new CRUDDaoImpl<T>(type, factory);
-	}
+public abstract class CRUDServiceImpl<T> implements CRUDService<T> {
 
 	@Override
 	@Transactional(readOnly = true)
@@ -54,11 +45,5 @@ public class CRUDServiceImpl<T> implements CRUDService<T> {
 		dao().save(film);
 	}
 
-	protected CRUDDao<T> dao() {
-		if (dao == null) {
-			throw new IllegalStateException("Class can used if dao was provided");
-		} else {
-			return dao;
-		}
-	}
+	protected abstract CRUDDao<T> dao();
 }

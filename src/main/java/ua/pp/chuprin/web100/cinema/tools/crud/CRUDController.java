@@ -31,9 +31,6 @@ import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 public abstract class CRUDController<T> {
 
-	@Autowired
-	private SessionFactory factory;
-
 	@InitBinder
 	public void binder(WebDataBinder binder) {
 		binder.registerCustomEditor(Timestamp.class,
@@ -286,7 +283,5 @@ public abstract class CRUDController<T> {
 		return StringUtils.uncapitalize(className);
 	}
 
-	protected CRUDService<T> service() {
-		return new CRUDServiceImpl<T>(domain(), factory);
-	}
+	protected abstract CRUDService<T> service();
 }

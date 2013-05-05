@@ -6,8 +6,6 @@ public class Column implements Comparable<Column> {
 	private final String cssClass;
 	private final short order;
 
-	private String template;
-
 	public Column(String name, String cssClass, short order) {
 		this.name = name;
 		this.cssClass = cssClass;
