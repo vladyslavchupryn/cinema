@@ -65,6 +65,11 @@
 						<spring:message code="${path}.column.${current.name}"/>
 					</a>
 				</c:when>
+				<c:when test="${current.type == 'many-to-many'}">
+					<a href="${base}${current.name}/list">
+						<spring:message code="${path}.column.${current.name}"/>
+					</a>
+				</c:when>
 				<c:otherwise>
 					Internal error
 				</c:otherwise>
@@ -98,6 +103,9 @@
 									<a href="${base}${currentColumn.name}/view/${current[currentColumn.name].id}">
 										<c:out value="${current[currentColumn.name]}"/>
 									</a>
+								</c:when>
+								<c:when test="${currentColumn.type == 'many-to-many'}">
+									<c:out value="${current[currentColumn.name]}"/>
 								</c:when>
 								<c:otherwise>
 									Internal error

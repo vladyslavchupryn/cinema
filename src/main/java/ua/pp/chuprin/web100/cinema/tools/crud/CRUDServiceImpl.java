@@ -2,6 +2,7 @@ package ua.pp.chuprin.web100.cinema.tools.crud;
 
 import java.util.Collection;
 
+import org.hibernate.SessionFactory;
 import org.springframework.transaction.annotation.Transactional;
 import ua.pp.chuprin.web100.cinema.tools.SorterBuilder;
 
@@ -12,8 +13,8 @@ public class CRUDServiceImpl<T> implements CRUDService<T> {
 	protected CRUDServiceImpl() {
 	}
 
-	/* package */ CRUDServiceImpl(Class<T> type) {
-		this.dao = new CRUDDaoImpl<T>(type);
+	/* package */ CRUDServiceImpl(Class<T> type, SessionFactory factory) {
+		this.dao = new CRUDDaoImpl<T>(type, factory);
 	}
 
 	@Override
@@ -29,6 +30,7 @@ public class CRUDServiceImpl<T> implements CRUDService<T> {
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public <A> Collection<A> findAll(Class<A> type) {
 		return dao().findAll(type);
 	}

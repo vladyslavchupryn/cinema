@@ -29,7 +29,7 @@ public class OrderDAOImpl extends CRUDDaoImpl<Order> implements OrderDAO {
 	}
 
 	@Override
-	protected Class<Order> domain() {
+	public Class<Order> domain() {
 		return Order.class;
 	}
 }

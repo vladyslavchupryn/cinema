@@ -7,13 +7,18 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface CRUD
-{
-	boolean list() default true;
+public @interface CRUD {
+	String cssClass() default "";
+
 	boolean edit() default true;
-	boolean view() default true;
+
+	boolean list() default true;
+
+	Class manyToMany() default Void.class;
 
 	short order() default 0;
-	String cssClass() default "";
+
 	String template() default "";
+
+	boolean view() default true;
 }

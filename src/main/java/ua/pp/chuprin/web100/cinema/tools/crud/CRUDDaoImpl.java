@@ -19,8 +19,9 @@ public class CRUDDaoImpl<T> implements CRUDDao<T> {
 	protected CRUDDaoImpl() {
 	}
 
-	/* package */ CRUDDaoImpl(Class<T> domain) {
+	/* package */ CRUDDaoImpl(Class<T> domain, SessionFactory factory) {
 		this.domain = domain;
+		this.factory = factory;
 	}
 
 	@Override
@@ -58,8 +59,9 @@ public class CRUDDaoImpl<T> implements CRUDDao<T> {
 	}
 
 	@Override
-	public void save(T film) {
-		getSession().saveOrUpdate(film);
+	public void save(T object) {
+		getSession().merge(object);
+		getSession().flush();
 	}
 
 	public Class<T> domain() {

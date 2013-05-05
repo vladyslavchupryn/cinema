@@ -5,13 +5,18 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
+<c:if test="${!empty customFragment}">
+	<jsp:include page="/WEB-INF/views/${customFragment}.jsp"/>
+</c:if>
+
+<form:errors path="*" cssClass="help-inline"/>
 <form:form method="post" action="${crud}save" id="crud-form"
            commandName="object" class="form-horizontal">
 	<form:hidden path="id"/>
 
 	<c:forEach var="current" items="${columns}">
 		<div class="control-group">
-			<label class="control-label"><spring:message
+			<label class="control-label" ><spring:message
 					code="${path}.column.${current.name}"/>:</label>
 			<div class="controls">
 				<c:choose>
@@ -20,11 +25,16 @@
 						<form:errors path="${current.name}" cssClass="field-error help-inline"/>
 					</c:when>
 					<c:when test="${current.type == 'many-to-one'}">
-						<form:select path="${current.name}"
+						<form:select path="${current.name}.id"
 						             data-placeholder="Select ..."
 						             cssClass="chzn-select">
 							<form:options items="${current.variants}" itemValue="id"/>
 						</form:select>
+					</c:when>
+					<c:when test="${current.type == 'many-to-many'}">
+						<div class="many-to-many span7">
+							<form:checkboxes path="${current.name}Id" items="${current.variants}" itemValue="id" element="div" ></form:checkboxes>
+						</div>
 					</c:when>
 					<c:otherwise>
 						Internal error

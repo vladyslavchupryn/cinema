@@ -1,5 +1,6 @@
 package ua.pp.chuprin.web100.cinema.tools.crud;
 
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.validation.Valid;
 import java.beans.PropertyEditorSupport;
@@ -14,6 +15,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
@@ -27,6 +30,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 public abstract class CRUDController<T> {
+
+	@Autowired
+	private SessionFactory factory;
 
 	@InitBinder
 	public void binder(WebDataBinder binder) {
@@ -91,7 +97,13 @@ public abstract class CRUDController<T> {
 
 		variables.put("path", path());
 
+		variables.put("customFragment",customEditFragment());
+
 		return editPage();
+	}
+
+	protected String customEditFragment() {
+		return null;
 	}
 
 	private Column readEditColumn(Class<T> clazz, Field field, CRUD config) {
@@ -101,6 +113,14 @@ public abstract class CRUDController<T> {
 		if(field.isAnnotationPresent(ManyToOne.class)) {
 			Collection variants = service().findAll(field.getType());
 			return new ManyToOneColumn(field.getName(), cssClass, order, variants);
+		} if(field.isAnnotationPresent(ManyToMany.class)) {
+			Class joinType = config.manyToMany();
+			if(joinType.equals(Void.class)) {
+				throw new InternalError("Crud manyToMany must be specified for " +
+					"editable many to many relation");
+			}
+			Collection variants = service().findAll(joinType);
+			return new ManyToManyColumn(field.getName(), cssClass, order, variants);
 		} else {
 			return new Column(field.getName(), cssClass, order);
 		}
@@ -120,8 +140,9 @@ public abstract class CRUDController<T> {
 		short order = config.order();
 
 		if(field.isAnnotationPresent(ManyToOne.class)) {
-			Collection variants = service().findAll(field.getType());
 			return new ManyToOneColumn(field.getName(), cssClass, order, null);
+		} if(field.isAnnotationPresent(ManyToMany.class)) {
+			return new ManyToManyColumn(field.getName(), cssClass, order, null);
 		} else {
 			return new Column(field.getName(), cssClass, order);
 		}
@@ -239,6 +260,8 @@ public abstract class CRUDController<T> {
 
 		if(field.isAnnotationPresent(ManyToOne.class)) {
 			return new ManyToOneColumn(field.getName(), cssClass, order, null);
+		} if(field.isAnnotationPresent(ManyToMany.class)) {
+			return new ManyToManyColumn(field.getName(), cssClass, order, null);
 		} else {
 			return new Column(field.getName(), cssClass, order);
 		}
@@ -264,6 +287,6 @@ public abstract class CRUDController<T> {
 	}
 
 	protected CRUDService<T> service() {
-		return new CRUDServiceImpl<T>(domain());
+		return new CRUDServiceImpl<T>(domain(), factory);
 	}
 }

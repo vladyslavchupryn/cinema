@@ -24,11 +24,6 @@ public class OrderController extends CRUDController<Order> {
 	@Autowired
 	private OrderService service;
 
-	@Override
-	protected String editPage() {
-		return "order/edit";
-	}
-
 //	@Override
 //	protected Object[] editMetadata() {
 //		return new Object[]{

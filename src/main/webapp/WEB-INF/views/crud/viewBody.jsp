@@ -20,6 +20,9 @@
 						<c:out value="${object[current.name]}"/>
 					</a>
 				</c:when>
+				<c:when test="${current.type == 'many-to-many'}">
+					<c:out value="${object[current.name]}"/>
+				</c:when>
 				<c:otherwise>
 					Internal error
 				</c:otherwise>

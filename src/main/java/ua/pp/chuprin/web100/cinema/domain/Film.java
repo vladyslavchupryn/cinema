@@ -65,14 +65,14 @@ public class Film {
 	@CRUD(order = 3)
 	private String country;
 
-	@Column(name = "\"year\"", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
+	@Column(name = "\"year\"", nullable = false, insertable = true, updatable = true, length = 4, precision = 0)
 	@NotNull
 	@Basic
 	@Min(1800) @Max(2200)
 	@CRUD(order = 4)
 	private Integer year;
 
-	@Column(name = "\"duration\"", nullable = false, insertable = true, updatable = true, length = 49, precision = 6)
+	@Column(name = "\"duration\"", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@NotNull
 	@Type(type = "interval")
 	@CRUD(order = 5)

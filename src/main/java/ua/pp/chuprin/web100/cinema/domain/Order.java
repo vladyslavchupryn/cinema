@@ -75,6 +75,7 @@ public class Order {
 		joinColumns = {@JoinColumn(name = "\"orderID\"")},
 		inverseJoinColumns = {@JoinColumn(name = "\"correlationID\"")}
 	)
+	@CRUD(order = 600, manyToMany = Correlation.class)
 	private Collection<Correlation> correlations;
 
 	public String getComment() {
@@ -85,7 +86,7 @@ public class Order {
 		this.comment = comment;
 	}
 
-	public Collection<Integer> getCorrelationIds() {
+	public Collection<Integer> getCorrelationsId() {
 		Collection<Integer> result = new HashSet<Integer>();
 		for (Correlation cur : this.correlations) {
 			result.add(cur.getId());
@@ -94,7 +95,7 @@ public class Order {
 		return result;
 	}
 
-	public void setCorrelationIds(Collection<Integer> correlations) {
+	public void setCorrelationsId(Collection<Integer> correlations) {
 		this.correlations = new HashSet<Correlation>();
 		for (Integer currentId : correlations) {
 			Correlation currentCorrelation = new Correlation();

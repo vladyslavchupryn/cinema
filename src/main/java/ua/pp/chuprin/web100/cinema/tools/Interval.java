@@ -14,7 +14,7 @@ import org.postgresql.util.PGInterval;
 public class Interval implements UserType {
 	private static final int[] SQL_TYPES = {Types.OTHER};
 
-	public static String getInterval(int value) {
+	public static String getInterval(Integer value) {
 		return new PGInterval(0, 0, 0, 0, 0, value).getValue();
 	}
 

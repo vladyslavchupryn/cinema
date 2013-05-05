@@ -59,6 +59,10 @@
 	        src="<spring:url value="/js/bootstrap/date-time-picker/bootstrap-datetimepicker.min.js" />"></script>
 	<script type="text/javascript"
 	        src="<spring:url value="/js/bootstrap/date-time-picker/locale/bootstrap-datetimepicker.${pageContext.response.locale.language}.js" />"></script>
+	<link rel="stylesheet"
+	      href="<spring:url value="/js/bootstrap/slider/css/slider.css" />"/>
+	<script type="text/javascript"
+	        src="<spring:url value="/js/bootstrap/slider/js/bootstrap-slider.js" />"></script>
 
 	<link rel="stylesheet"
 	      href="<spring:url value="/css/awesome/css/font-awesome.min.css" />"/>
