@@ -146,42 +146,6 @@ public class Film {
 	}
 
 	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (name != null ? name.hashCode() : 0);
-		result = 31 * result + (author != null ? author.hashCode() : 0);
-		result = 31 * result + (genre != null ? genre.hashCode() : 0);
-		result = 31 * result + (country != null ? country.hashCode() : 0);
-		result = 31 * result + (year != null ? year.hashCode() : 0);
-		result = 31 * result + (duration != null ? duration.hashCode() : 0);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		Film film = (Film) o;
-
-		if (author != null ? !author.equals(film.author) : film.author != null)
-			return false;
-		if (country != null ? !country.equals(film.country) : film.country != null)
-			return false;
-		if (duration != null ? !duration.equals(film.duration) : film.duration != null)
-			return false;
-		if (genre != null ? !genre.equals(film.genre) : film.genre != null)
-			return false;
-		if (id != null ? !id.equals(film.id) : film.id != null) return false;
-		if (name != null ? !name.equals(film.name) : film.name != null)
-			return false;
-		if (year != null ? !year.equals(film.year) : film.year != null)
-			return false;
-
-		return true;
-	}
-
-	@Override
 	public String toString() {
 		return name + " (" + year + ")";
 	}

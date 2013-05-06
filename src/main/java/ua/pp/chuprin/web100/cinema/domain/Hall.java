@@ -77,28 +77,7 @@ public class Hall {
 		return sessions;
 	}
 
-	public void setSessions(Collection<Session> sessionsesById) {
-		this.sessions = sessionsesById;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (name != null ? name.hashCode() : 0);
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		Hall hall = (Hall) o;
-
-		if (id != null ? !id.equals(hall.id) : hall.id != null) return false;
-		if (name != null ? !name.equals(hall.name) : hall.name != null)
-			return false;
-
-		return true;
+	public void setSessions(Collection<Session> sessions) {
+		this.sessions = sessions;
 	}
 }

@@ -10,15 +10,14 @@
 				<span class="icon-bar"></span>
 				<span class="icon-bar"></span>
 			</button>
-			<a class="brand" href="#"><spring:message code="project.name"/></a>
+			<a class="brand" href="<spring:url value="/"/>"><spring:message code="project.name"/></a>
 			<div class="nav-collapse collapse">
 				<%--<p class="navbar-text pull-right">--%>
 					<%--Logged in as <a href="#" class="navbar-link">Username</a>--%>
 				<%--</p>--%>
 				<ul class="nav">
-					<li class="active"><a href="#"><spring:message code="header.home"/></a></li>
-					<li><a href="#about"><spring:message code="header.about"/></a></li>
-					<li><a href="#contact"><spring:message code="header.contact"/></a></li>
+					<li class="active"><a href="<spring:url value="/"/>"><spring:message code="header.home"/></a></li>
+					<li><a href="<spring:url value="/setup/"/>"><spring:message code="header.setup"/></a></li>
 				</ul>
 			</div>
 		</div>

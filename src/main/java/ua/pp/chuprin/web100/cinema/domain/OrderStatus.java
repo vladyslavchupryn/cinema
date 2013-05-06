@@ -16,18 +16,17 @@ import org.hibernate.validator.constraints.Length;
 import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 @Entity
-@Table(name = "\"PlaceTypes\"")
-public class PlaceType {
-
+@Table(name = "\"OrderStatuses\"")
+public class OrderStatus {
 	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id
 	@GeneratedValue(
-		generator = "placeType_sequence_generator",
+		generator = "order_status_sequence_generator",
 		strategy = GenerationType.SEQUENCE
 	)
 	@SequenceGenerator(
-		name = "placeType_sequence_generator",
-		sequenceName = "\"PlaceTypes_id_seq\"",
+		name = "order_status_sequence_generator",
+		sequenceName = "\"OrderStatuses_id_seq\"",
 		allocationSize = 1
 	)
 	private Integer id;
@@ -39,16 +38,8 @@ public class PlaceType {
 	@CRUD(order = 100)
 	private String name;
 
-	@OneToMany(mappedBy = "placeType")
-	private Collection<Category> categories;
-
-	public Collection<Category> getCategories() {
-		return categories;
-	}
-
-	public void setCategories(Collection<Category> categoriesesById) {
-		this.categories = categoriesesById;
-	}
+	@OneToMany(mappedBy = "status")
+	private Collection<Order> orders;
 
 	public Integer getId() {
 		return id;
@@ -62,12 +53,20 @@ public class PlaceType {
 		return name;
 	}
 
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public Collection<Order> getOrders() {
+		return orders;
+	}
+
+	public void setOrders(Collection<Order> orders) {
+		this.orders = orders;
+	}
+
 	@Override
 	public String toString() {
 		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
 	}
 }

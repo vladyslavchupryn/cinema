@@ -21,7 +21,11 @@
 					</a>
 				</c:when>
 				<c:when test="${current.type == 'many-to-many'}">
-					<c:out value="${object[current.name]}"/>
+					<c:forEach items="${object[current.name]}" var="currentRelation">
+						<a href="${base}${current.relation}/view/${currentRelation.id}">
+							<c:out value="${currentRelation}"/>
+						</a>
+					</c:forEach>
 				</c:when>
 				<c:otherwise>
 					Internal error

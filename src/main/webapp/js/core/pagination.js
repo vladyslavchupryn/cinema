@@ -12,7 +12,7 @@ function buildPages(firstPage, count, countOnPage, start) {
 		}
 		pages[index] = {
 			start: current,
-			end  : count
+			end  : end
 		}
 
 		index++;
@@ -101,5 +101,5 @@ function initPaginator(start, end, count, url) {
 
 	var range = buildRange(active, pages);
 
-	buildPagination(range, active, BASE_URL + url, pages);
+	buildPagination(range, active, url, pages);
 }

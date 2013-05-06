@@ -2,34 +2,15 @@ package ua.pp.chuprin.web100.cinema.tools;
 
 import java.lang.reflect.Field;
 
-import org.hibernate.SessionFactory;
-import org.hibernate.metadata.ClassMetadata;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.criterion.Order;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SorterBuilder<T> {
-	private static final String DEFAULT_SORT = "asc";
-
-	public static class Sorter {
-
-		public final String column;
-
-		public final String oder;
-
-		public Sorter(String column, String oder) {
-			this.column = column;
-			this.oder = oder;
-		}
-
-		public String hql() {
-			return " order by " + column + " " + oder;
-		}
-	}
 
 	public static Sorter build(String sort, Class entity) {
 		String column = "id";
-		String oder = DEFAULT_SORT;
+		OrderType oder = OrderType.ASC;
 
 		String[] sortSettings = sort.split("-");
 		if (sortSettings.length == 2) {
@@ -41,10 +22,35 @@ public class SorterBuilder<T> {
 			}
 
 			if ("desc".equals(sortSettings[1])) {
-				oder = "desc";
+				oder = OrderType.DESC;
 			}
 		}
 
 		return new Sorter(column, oder);
+	}
+
+	private static enum OrderType {
+		ASC,
+		DESC
+	}
+
+	public static class Sorter {
+
+		public final String column;
+
+		public final OrderType oder;
+
+		public Sorter(String column, OrderType oder) {
+			this.column = column;
+			this.oder = oder;
+		}
+
+		public Order order() {
+			if (oder == OrderType.DESC) {
+				return Order.desc(column);
+			} else {
+				return Order.asc(column);
+			}
+		}
 	}
 }

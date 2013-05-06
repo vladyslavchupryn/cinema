@@ -10,7 +10,7 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<title>
-		<tiles:getAsString name="title"/>
+		<spring:message code="project.name"/>
 	</title>
 
 	<!-- JQuery --------------------------------------------------------------->
@@ -26,6 +26,8 @@
 	<!-- http://www.stepanreznikov.com/js-shortcuts/ -->
 	<script type="text/javascript"
 	        src="<spring:url value="/js/jquery/jquery.hotkeys.js" />"></script>
+	<script type="text/javascript"
+	        src="<spring:url value="/js/jquery/jquery.cookie.js" />"></script>
 	<!-- http://harvesthq.github.com/chosen/ -->
 	<script type="text/javascript"
 	        src="<spring:url value="/js/jquery/chosen/chosen.jquery.min.js" />"></script>

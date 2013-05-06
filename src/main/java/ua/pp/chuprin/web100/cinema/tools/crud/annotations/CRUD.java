@@ -14,7 +14,7 @@ public @interface CRUD {
 
 	boolean list() default true;
 
-	Class manyToMany() default Void.class;
+	Class joinType() default Void.class;
 
 	short order() default 0;
 

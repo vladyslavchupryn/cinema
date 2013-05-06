@@ -6,8 +6,8 @@ public class ManyToOneColumn extends Column {
 
 	private final Collection variants;
 
-	public ManyToOneColumn(String name, String cssClass, short order, Collection variants) {
-		super(name, cssClass, order);
+	public ManyToOneColumn(Class clazz, String name, String cssClass, short order, Collection variants) {
+		super(clazz, name, cssClass, order);
 		this.variants = variants;
 	}
 

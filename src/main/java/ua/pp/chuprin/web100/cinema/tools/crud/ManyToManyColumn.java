@@ -2,13 +2,22 @@ package ua.pp.chuprin.web100.cinema.tools.crud;
 
 import java.util.Collection;
 
+import org.springframework.util.StringUtils;
+
 public class ManyToManyColumn extends Column {
 
 	private final Collection variants;
 
-	public ManyToManyColumn(String name, String cssClass, short order, Collection variants) {
-		super(name, cssClass, order);
+	private final String relation;
+
+	public ManyToManyColumn(Class clazz, String name, String cssClass, short order, Collection variants, Class joinType) {
+		super(clazz, name, cssClass, order);
 		this.variants = variants;
+		this.relation = StringUtils.uncapitalize(joinType.getSimpleName());
+	}
+
+	public String getRelation() {
+		return relation;
 	}
 
 	@Override

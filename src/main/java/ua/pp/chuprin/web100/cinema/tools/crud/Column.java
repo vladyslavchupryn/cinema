@@ -6,10 +6,18 @@ public class Column implements Comparable<Column> {
 	private final String cssClass;
 	private final short order;
 
-	public Column(String name, String cssClass, short order) {
+	private final Class clazz;
+
+	public Column(Class clazz, String name, String cssClass, short order) {
 		this.name = name;
 		this.cssClass = cssClass;
 		this.order = order;
+
+		this.clazz = clazz;
+	}
+
+	public Class getClazz() {
+		return clazz;
 	}
 
 	@Override

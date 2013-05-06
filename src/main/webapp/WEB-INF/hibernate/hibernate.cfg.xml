@@ -8,6 +8,7 @@
 		<mapping class="ua.pp.chuprin.web100.cinema.domain.Correlation"/>
 		<mapping class="ua.pp.chuprin.web100.cinema.domain.Film"/>
 		<mapping class="ua.pp.chuprin.web100.cinema.domain.Hall"/>
+		<mapping class="ua.pp.chuprin.web100.cinema.domain.OrderStatus"/>
 		<mapping class="ua.pp.chuprin.web100.cinema.domain.Order"/>
 		<mapping class="ua.pp.chuprin.web100.cinema.domain.Place"/>
 		<mapping class="ua.pp.chuprin.web100.cinema.domain.PlaceType"/>

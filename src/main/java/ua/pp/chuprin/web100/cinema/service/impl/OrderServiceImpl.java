@@ -7,7 +7,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.pp.chuprin.web100.cinema.dao.OrderDAO;
-import ua.pp.chuprin.web100.cinema.domain.Correlation;
 import ua.pp.chuprin.web100.cinema.domain.Order;
 import ua.pp.chuprin.web100.cinema.service.OrderService;
 import ua.pp.chuprin.web100.cinema.tools.crud.CRUDDao;
@@ -27,8 +26,13 @@ public class OrderServiceImpl extends CRUDServiceImpl<Order> implements OrderSer
 	}
 
 	@Override
-	public Collection<Correlation> correlations() {
-		return dao.correlations();
+	public Collection calcCustomersByFilms() {
+		return dao.calcCustomersByFilms();
+	}
+
+	@Override
+	public Collection calcCustomersBySessions() {
+		return dao.calcCustomersBySessions();
 	}
 
 	@Override

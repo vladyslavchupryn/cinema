@@ -5,7 +5,6 @@
 
 <tiles-definitions>
 	<definition name="base" template="/WEB-INF/views/base.jsp">
-		<put-attribute name="title" value="Default title" />
 		<put-attribute name="header" value="/WEB-INF/views/header.jsp" />
 		<put-attribute name="navigation" value="/WEB-INF/views/navigation.jsp" />
 		<put-attribute name="content" value="" />
@@ -13,12 +12,10 @@
 	</definition>
 
 	<definition name="*/edit" extends="base">
-		<put-attribute name="title" value="View: {1}-{2}" />
 		<put-attribute name="content" value="{1}-edit" />
 	</definition>
 
 	<definition name="*/view" extends="base">
-		<put-attribute name="title" value="View: {1}-{2}" />
 		<put-attribute name="content" value="{1}-view" />
 	</definition>
 
@@ -44,7 +41,6 @@
 		<definition name="REGEXP:test\.definition(.*)\.message(.*)" template="/layout{1}.jsp">
 	-->
 	<definition name="*/*" extends="base">
-		<put-attribute name="title" value="View: {1}-{2}" />
 		<put-attribute name="content" value="/WEB-INF/views/{1}/{2}.jsp" />
 	</definition>
 

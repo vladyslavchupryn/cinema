@@ -22,6 +22,10 @@ import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 @Entity
 @Table(name = "\"Orders\"")
+@org.hibernate.annotations.Entity(
+	dynamicInsert = true,
+	dynamicUpdate = true
+)
 public class Order {
 
 	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
@@ -50,11 +54,9 @@ public class Order {
 	@CRUD(order = 200)
 	private Double price;
 
-	@Column(name = "\"comment\"", nullable = true, insertable = true, updatable = true, length = 126, precision = 0)
+	@Column(name = "\"comment\"", insertable = true, updatable = true, length = 126, precision = 0)
 	@Basic
-	@NotNull
-	@Length(min = 3, max = 126)
-	@CRUD(order = 300)
+	@CRUD(order = 700)
 	private String comment;
 
 	@ManyToOne(fetch = FetchType.LAZY)
@@ -69,13 +71,19 @@ public class Order {
 	@CRUD(order = 500)
 	private Session session;
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "\"statusID\"", referencedColumnName = "id", nullable = false)
+	@NotNull
+	@CRUD(order = 150)
+	private OrderStatus status;
+
 	@ManyToMany
 	@JoinTable(
 		name = "\"OrdersCorrelations\"",
 		joinColumns = {@JoinColumn(name = "\"orderID\"")},
 		inverseJoinColumns = {@JoinColumn(name = "\"correlationID\"")}
 	)
-	@CRUD(order = 600, manyToMany = Correlation.class)
+	@CRUD(order = 600, joinType = Correlation.class)
 	private Collection<Correlation> correlations;
 
 	public String getComment() {
@@ -86,10 +94,20 @@ public class Order {
 		this.comment = comment;
 	}
 
+	public Collection<Correlation> getCorrelations() {
+		return correlations;
+	}
+
+	public void setCorrelations(Collection<Correlation> correlations) {
+		this.correlations = correlations;
+	}
+
 	public Collection<Integer> getCorrelationsId() {
 		Collection<Integer> result = new HashSet<Integer>();
-		for (Correlation cur : this.correlations) {
-			result.add(cur.getId());
+		if (this.correlations != null) {
+			for (Correlation cur : this.correlations) {
+				result.add(cur.getId());
+			}
 		}
 
 		return result;
@@ -102,14 +120,6 @@ public class Order {
 			currentCorrelation.setId(currentId);
 			this.correlations.add(currentCorrelation);
 		}
-	}
-
-	public Collection<Correlation> getCorrelations() {
-		return correlations;
-	}
-
-	public void setCorrelations(Collection<Correlation> correlations) {
-		this.correlations = correlations;
 	}
 
 	public String getCustomerName() {
@@ -152,32 +162,12 @@ public class Order {
 		this.session = sessionBySeasonId;
 	}
 
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		result = 31 * result + (customerName != null ? customerName.hashCode() : 0);
-		result = 31 * result + (price != null ? price.hashCode() : 0);
-		result = 31 * result + (comment != null ? comment.hashCode() : 0);
-		return result;
+	public OrderStatus getStatus() {
+		return status;
 	}
 
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		Order order = (Order) o;
-
-		if (comment != null ? !comment.equals(order.comment) : order.comment != null)
-			return false;
-		if (customerName != null ? !customerName.equals(order.customerName) : order.customerName != null)
-			return false;
-		if (id != null ? !id.equals(order.id) : order.id != null)
-			return false;
-		if (price != null ? !price.equals(order.price) : order.price != null)
-			return false;
-
-		return true;
+	public void setStatus(OrderStatus status) {
+		this.status = status;
 	}
 
 	@Override

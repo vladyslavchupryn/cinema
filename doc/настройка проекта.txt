@@ -1,7 +1,0 @@
- - настроить профиль для maven
-    должен содержать следующие настройки
-
-    <jdbc-url>jdbc:postgresql://localhost/monitoring</jdbc-url>
-    <jdbc-username>***</jdbc-username>
-    <jdbc-password>***</jdbc-password>
-

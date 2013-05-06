@@ -46,11 +46,36 @@
 
 			return false;
 		});
+
+		var count = $.cookie('${path}' + '-page-count');
+		$('.page-length').val(count);
+
+		$('.page-length').change(function(){
+			var start = ${pageStart};
+
+			var count = $(this).val();
+			var end = start + count;
+
+			$.cookie('${path}' + '-page-count', count);
+
+			window.location = '${crud}list/?sort=${sort}&pageStart='+start+'&pageEnd='+end;
+		});
 	});
 </script>
 
-<a class="btn btn-primary uppercase" href="${crud}create" hotkey="alt+n" rel="tooltip" title="Alt + N"><spring:message code="crud.list.create"/></a>
-<br/>
+<div class="row-fluid">
+	<div class="text-left" style="float:left;">
+		<a class="btn btn-primary uppercase" href="${crud}create" hotkey="alt+n" rel="tooltip" title="Alt + N"><spring:message code="crud.list.create"/></a>
+	</div>
+	<div class="text-right">
+		<select class="page-length">
+			<option value="10" selected="selected">10</option>
+			<option value="25">25</option>
+			<option value="50">50</option>
+		</select>
+	</div>
+</div>
+
 <table class="table table-striped table-bordered table-hover">
 	<thead>
 	<th>#</th>
@@ -105,7 +130,11 @@
 									</a>
 								</c:when>
 								<c:when test="${currentColumn.type == 'many-to-many'}">
-									<c:out value="${current[currentColumn.name]}"/>
+									<c:forEach items="${current[currentColumn.name]}" var="currentRelation">
+										<a href="${base}${currentColumn.relation}/view/${currentRelation.id}">
+											<c:out value="${currentRelation}"/>
+										</a>
+									</c:forEach>
 								</c:when>
 								<c:otherwise>
 									Internal error
@@ -138,20 +167,24 @@
 		initPaginator(${pageStart}, ${pageEnd}, ${count},'${crud}list?sort=${sort}');
 	})
 </script>
-<c:if test="${count > 0}">
-	<div >
-		<div id="list-info" class="text-left" style="float: left;">
-			<spring:message code="crud.list.position" arguments="
-				<div class=\"inline\" id=\"page-start\">${pageStart+1}</div>,
-				<div class=\"inline\" id=\"page-end\">${pageEnd}</div>,
-				<div class=\"inline\" id=\"count\">${count}</div>" htmlEscape="false" />
-		</div>
-		<div class="pagination text-right">
-			<ul>
-				<li class="pagination-prev"><a href="#" hotkey="alt+left" rel="tooltip" title="Alt + &#8592;"><spring:message code="crud.list.prev"/></a></li>
-				<li class="pagination-next"><a href="#" hotkey="alt+right" rel="tooltip" title="Alt + &#8594;"><spring:message code="crud.list.next"/></a></li>
-			</ul>
-		</div>
+<div class="row-fluid">
+	<div class="text-left" style="float:left;margin-top: 10px;margin-right: 10px;">
+		<a class="btn btn-primary uppercase" class = "text-right" href="${crud}create" rel="tooltip" title="Alt + N" ><spring:message code="crud.list.create"/></a>
 	</div>
-</c:if>
-<a class="btn btn-primary uppercase" class = "text-right" href="${crud}create" rel="tooltip" title="Alt + N" ><spring:message code="crud.list.create"/></a>
+	<div class="text-right">
+		<c:if test="${count > 0}">
+			<div id="list-info" class="text-left" style="float: left;">
+				<spring:message code="crud.list.position" arguments="
+					<div class=\"inline\" id=\"page-start\">${pageStart+1}</div>,
+					<div class=\"inline\" id=\"page-end\">${pageEnd}</div>,
+					<div class=\"inline\" id=\"count\">${count}</div>" htmlEscape="false" />
+			</div>
+			<div class="pagination text-right">
+				<ul>
+					<li class="pagination-prev"><a href="#" hotkey="alt+left" rel="tooltip" title="Alt + &#8592;"><spring:message code="crud.list.prev"/></a></li>
+					<li class="pagination-next"><a href="#" hotkey="alt+right" rel="tooltip" title="Alt + &#8594;"><spring:message code="crud.list.next"/></a></li>
+				</ul>
+			</div>
+		</c:if>
+	</div>
+</div>

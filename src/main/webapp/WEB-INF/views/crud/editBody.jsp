@@ -5,6 +5,12 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
 
+<script type="text/javascript">
+	$(function(){
+		$('input[java-type]').first().focus();
+	});
+</script>
+
 <c:if test="${!empty customFragment}">
 	<jsp:include page="/WEB-INF/views/${customFragment}.jsp"/>
 </c:if>
@@ -21,7 +27,7 @@
 			<div class="controls">
 				<c:choose>
 					<c:when test="${current.type == 'simple'}">
-						<form:input path="${current.name}" java-type="${object[current.name].getClass().name}" cssClass="${current.cssClass}"/>
+						<form:input path="${current.name}" java-type="${current.clazz.name}" cssClass="${current.cssClass}"/>
 						<form:errors path="${current.name}" cssClass="field-error help-inline"/>
 					</c:when>
 					<c:when test="${current.type == 'many-to-one'}">

@@ -20,6 +20,10 @@ import ua.pp.chuprin.web100.cinema.tools.crud.annotations.CRUD;
 
 @Entity
 @Table(name = "\"Sessions\"")
+@org.hibernate.annotations.Entity(
+	dynamicInsert = true,
+	dynamicUpdate = true
+)
 public class Session {
 	@Column(name = "id", nullable = false, insertable = true, updatable = true, length = 10, precision = 0)
 	@Id
@@ -42,11 +46,9 @@ public class Session {
 
 	@Column(
 		name = "\"percent\"",
-		nullable = false,
 		insertable = true,
 		updatable = true,
 		length = 8,
-
 		precision = 8
 	)
 	@Basic
@@ -116,25 +118,6 @@ public class Session {
 
 	public void setStart(Timestamp start) {
 		this.start = start;
-	}
-
-	@Override
-	public int hashCode() {
-		int result = id != null ? id.hashCode() : 0;
-		return result;
-	}
-
-	@Override
-	public boolean equals(Object o) {
-		if (this == o) return true;
-		if (o == null || getClass() != o.getClass()) return false;
-
-		Session session = (Session) o;
-
-		if (id != null ? !id.equals(session.id) : session.id != null)
-			return false;
-
-		return true;
 	}
 
 	@Override

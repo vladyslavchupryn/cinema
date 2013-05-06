@@ -43,7 +43,7 @@
 
 	<profiles>
 		<profile>
-			<id>dev</id>
+			<id>cinema-dev</id>
 			<properties>
 				<compiler-debug>true</compiler-debug>
 				<compiler-optimize>false</compiler-optimize>
@@ -51,7 +51,7 @@
 		</profile>
 
 		<profile>
-			<id>production</id>
+			<id>cinema-production</id>
 			<properties>
 				<compiler-debug>false</compiler-debug>
 				<compiler-optimize>true</compiler-optimize>
@@ -420,12 +420,23 @@
 
 			<!-- плагин для деплоймента в tomcat -->
 			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>tomcat-maven-plugin</artifactId>
-				<version>1.0-beta-1</version>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat6-maven-plugin</artifactId>
+				<version>2.1</version>
 				<configuration>
-					<url>http://localhost:8080/manager/text</url>
-					<server>localhost_server_id</server>
+					<path>/</path>
+					<url>${server-url-manager}</url>
+					<server>${server-id}</server>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.1</version>
+				<configuration>
+					<path>/</path>
+					<url>${server-url-manager}</url>
+					<server>${server-id}</server>
 				</configuration>
 			</plugin>
 
@@ -438,7 +449,7 @@
 					<url>${jdbc-url}</url>
 					<user>${jdbc-username}</user>
 					<password>${jdbc-password}</password>
-					<table>monitoring</table>
+					<table>migration_metadata</table>
 					<locations>
 						<location>filesystem:${project-directory}</location>
 					</locations>

@@ -28,14 +28,14 @@ CREATE TABLE "Sessions" (
     CONSTRAINT "Films_filmID"
         FOREIGN KEY("filmID")
         REFERENCES "Films"("id")
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION,
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
 
     CONSTRAINT "Halls_hallID"
         FOREIGN KEY("hallID")
         REFERENCES "Halls"("id")
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE "PlaceTypes" (
@@ -55,14 +55,14 @@ CREATE TABLE "Categories" (
     CONSTRAINT "PlaceTypes_typeID"
         FOREIGN KEY("typeID")
         REFERENCES "PlaceTypes"("id")
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION,
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
 
     CONSTRAINT "Halls_hallID"
         FOREIGN KEY("hallID")
         REFERENCES "Halls"("id")
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 
 );
 
@@ -76,16 +76,21 @@ CREATE TABLE "Places" (
     CONSTRAINT "Categories_categoryID"
         FOREIGN KEY("categoryID")
         REFERENCES "Categories"("id")
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE "Correlations" (
     "id" serial PRIMARY KEY,
 
     "name" varchar(126) NOT NULL,
-    "percent" real NOT NULL,
-    "expiration" timestamp
+    "percent" real NOT NULL
+);
+
+CREATE TABLE "OrderStatuses" (
+    "id" serial PRIMARY KEY,
+
+    "name" varchar(126)  NOT NULL
 );
 
 CREATE TABLE "Orders" (
@@ -93,22 +98,29 @@ CREATE TABLE "Orders" (
 
     "seasonID" int NOT NULL,
     "placeID" int NOT NULL,
+    "statusID" int NOT NULL,
 
     "customerName" varchar(126) NOT NULL,
     "price" numeric(12,6) NOT NULL,
     "comment" varchar(126),
 
+    CONSTRAINT "OrderStatuses_statusID"
+        FOREIGN KEY("statusID")
+        REFERENCES "OrderStatuses"("id")
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+
     CONSTRAINT "Sessions_seasonID"
         FOREIGN KEY("seasonID")
         REFERENCES "Sessions"("id")
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION,
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
 
     CONSTRAINT "Places_placeID"
         FOREIGN KEY("placeID")
         REFERENCES "Places"("id")
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE "OrdersCorrelations" (
@@ -118,12 +130,12 @@ CREATE TABLE "OrdersCorrelations" (
     CONSTRAINT "Orders_orderID"
         FOREIGN KEY("orderID")
         REFERENCES "Orders"("id")
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION,
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
 
     CONSTRAINT "Correlations_correlationID"
         FOREIGN KEY("correlationID")
         REFERENCES "Correlations"("id")
-        ON DELETE NO ACTION
-        ON UPDATE NO ACTION
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
